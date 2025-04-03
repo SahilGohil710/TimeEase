@@ -102,14 +102,38 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     let emailInput = document.getElementById("Email");
+
     emailInput.addEventListener("input", function () {
         let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
         if (!emailPattern.test(this.value)) {
             this.setCustomValidity("Please enter a valid email address.");
         } else {
             this.setCustomValidity("");
+
+            // Call server-side method to check for duplicate email
+            checkDuplicateEmail(this.value);
         }
     });
+
+    function checkDuplicateEmail(email) {
+        $.ajax({
+            url: '../AddEmp/CheckDuplicateEmail',
+            type: 'POST',
+            data: { email: email },
+            success: function (response) {
+                if (!response.isValid) {
+                    alert(response.message); // Show validation error message
+                    $("#Email").val(""); // Clear the input field
+                } else {
+                    emailInput.setCustomValidity("");
+                }
+            },
+            error: function () {
+                alert("Error checking email.");
+            }
+        });
+    }
 });
 
 $(document).ready(function () {

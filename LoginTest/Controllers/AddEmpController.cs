@@ -40,6 +40,39 @@ namespace LoginTest.Controllers
             return ipAddress;
         }
 
+        [HttpPost]
+        public JsonResult CheckDuplicateEmail(string email)
+        {
+            // Server-side validation
+            if (string.IsNullOrEmpty(email))
+            {
+                return Json(new { isValid = false, message = "Email-ID is required" });
+            }
+            else if (email.Length > 100)
+            {
+                return Json(new { isValid = false, message = "Email-ID should not be greater than 100 characters" });
+            }
+            else
+            {
+                // Regular expression for email validation
+                var emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern))
+                {
+                    return Json(new { isValid = false, message = "Please enter a valid email address." });
+                }
+            }
+
+            // Check for duplicate email in the database
+            bool isDuplicate = _repository.M_Users.Any(e => e.Email.ToUpper().Trim() == email.ToUpper().Trim());
+
+            if (isDuplicate)
+            {
+                return Json(new { isValid = false, message = "This email is already in use." });
+            }
+
+            return Json(new { isValid = true });
+        }
+
         #region INDEX
         public ActionResult Index()
         {
@@ -379,6 +412,14 @@ namespace LoginTest.Controllers
             {
                 ModelState.AddModelError("Email", "Email-ID should not be greater than 100 characters");
             }
+            else
+            {
+                var emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern))
+                {
+                    ModelState.AddModelError("Email", "Please enter a valid email address");
+                }
+            }
             if (string.IsNullOrEmpty(model.PhoneNo))
             {
                 ModelState.AddModelError("PhoneNo", "Phone No is required");
@@ -470,6 +511,20 @@ namespace LoginTest.Controllers
                 };
                 _repository.M_Users.Add(newUser);
                 _repository.SaveChanges();
+
+                // Send Welcome Email
+                string subject = "Welcome to TimeEase!";
+                string message = $@"
+                                Dear {newUser.FullName},<br/><br/>
+                                Welcome to TimeEase! We are thrilled to have you join our team.<br/><br/>
+                                Your account has been successfully created, but for security reasons, you need to set your password.
+                                Please visit the <b>Forgot Password</b> section on the login page to create your password.<br/><br/>
+                                If you have any questions, feel free to reach out.<br/><br/>
+                                Regards,<br/>
+                                HR Team";
+
+                var emailService = new EmailService();
+                emailService.SendEmail(newUser.Email, subject, message);
 
                 TempData["IsFailureMessage"] = false;
                 TempData["Message"] = "Successfully Created.";

@@ -263,4 +263,3 @@ C:\Users\gohil\OneDrive\Desktop\Projects\EMS\Project\LoginTest\bin\Microsoft.Owi
 C:\Users\gohil\OneDrive\Desktop\Projects\EMS\Project\LoginTest\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\gohil\OneDrive\Desktop\Projects\EMS\Project\LoginTest\obj\Debug\LoginTest.dll
 C:\Users\gohil\OneDrive\Desktop\Projects\EMS\Project\LoginTest\obj\Debug\LoginTest.pdb
-C:\Users\gohil\OneDrive\Desktop\Projects\EMS\Project\LoginTest\obj\Debug\LoginTest.csprojResolveAssemblyReference.cache
