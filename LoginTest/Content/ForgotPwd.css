@@ -1,0 +1,70 @@
+﻿body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f2f5;
+    margin: 0;
+    background: linear-gradient(120deg, #1e3c72, #2a5298);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 350px;
+    background: #F8F9FD;
+    border-radius: 40px;
+    padding: 25px 35px;
+    border: 5px solid rgb(255, 255, 255);
+    box-shadow: rgba(133, 189, 215, 0.878) 0px 30px 30px -20px;
+    margin: 20px;
+}
+
+.text-danger {
+    color: red;
+}
+
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.glimmer {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    opacity: 0;
+    animation: glimmerAnimation 3s linear infinite;
+}
+
+@keyframes glimmerAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(0px) translateX(0px);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-50px) translateX(50px);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) translateX(100px);
+    }
+}

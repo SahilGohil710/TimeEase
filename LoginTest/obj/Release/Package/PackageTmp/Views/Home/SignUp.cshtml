@@ -1,0 +1,248 @@
+﻿@model LoginTest.Models.SignUpModel
+@{
+    ViewBag.Title = "Sign-Up";
+    Layout = null;
+}
+<link href="~/Content/AdminLTE/plugins/select2/css/select2.css" rel="stylesheet" />
+<link href="~/Content/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css" rel="stylesheet" />
+<script src="~/Content/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="~/Content/AdminLTE/plugins/select2/js/select2.min.js"></script>
+<link href="~/Content/AdminLTE/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<script src="~/Content/alertify.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<link href="~/Content/alertify.min.css" rel="stylesheet" />
+<link href="~/Content/Login.css" rel="stylesheet" />
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: #f0f2f5;
+        margin: 0;
+    }
+    .text-success {
+        color:darkseagreen;
+    }
+
+    .req:after {
+            content: "*";
+            color: red;
+        }
+    .text-danger{
+        color:red;
+    }
+
+    .container {
+        max-width: 900px; /* Increase the width */
+        background: #F8F9FD;
+        background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+        border-radius: 40px;
+        padding: 35px 45px; /* Increase the padding */
+        border: 5px solid rgb(255, 255, 255);
+        box-shadow: rgba(133, 189, 215, 0.878) 0px 30px 30px -20px;
+        margin: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+        .form-grid input,
+        .form-grid label {
+            width: 100%;
+        }
+
+        .form-grid .full-width {
+            grid-column: span 2;
+        }
+</style>
+
+<html>
+<body>
+    <div class="container">
+        <div class="heading">Sign-Up</div>
+        @using (Html.BeginForm("SignUp", "Home", FormMethod.Post, new { @class = "form" }))
+        {
+            <div class="form-grid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "input", @maxlength = "100", @placeholder = "First Name", @tabindex = "1" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Designation, "Designation", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.Designation, new { htmlAttributes = new { @class = "input", @maxlength = "200", @placeholder = "Designation", @tabindex = "3" } })
+                            @Html.ValidationMessageFor(model => model.Designation, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "input", @maxlength = "100", @placeholder = "Last Name", @tabindex = "2" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CompanyName, "Company Name", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "input", @maxlength = "200", @placeholder = "Company Name", @tabindex = "4" } })
+                            @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, "Address", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "input", @maxlength = "400", @placeholder = "Address", @tabindex = "5" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.CityName, "City", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.CityName, new { htmlAttributes = new { @class = "input", @maxlength = "100", @placeholder = "City", @tabindex = "7" } })
+                            @Html.ValidationMessageFor(model => model.CityName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.State, "State", htmlAttributes: new { @class = "control-label req" })
+                            @*@Html.DropDownList("DropDn_State", null, "Select", htmlAttributes: new { @class = "input", @tabindex = "6" })*@
+                            @Html.DropDownListFor(model => model.State, ViewBag.DropDn_State as SelectList, "Select", new { @class = "input", @tabindex = "6" })
+                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PinCode, "PinCode", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.PinCode, new { htmlAttributes = new { @class = "input", @maxlength = "6", @placeholder = "PinCode", @tabindex = "8", @oninput = "validateNumericInput(this)" } })
+                            @Html.ValidationMessageFor(model => model.PinCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        @* In country by default india to be passed for now *@
+                        @*<div class="form-group">
+                                @Html.LabelFor(model => model.Country, "Country", htmlAttributes: new { @class = "control-label req" })
+                                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "input", @maxlength = "100", @placeholder = "Country" } })
+                                @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                            </div>*@
+                        <div class="form-group ">
+                            @Html.LabelFor(model => model.BusinessType, "Business Type", htmlAttributes: new { @class = "control-label req" })
+                            @*@Html.DropDownList("DropDn_BusinessType", null, "Select", htmlAttributes: new { @class = "input", @tabindex = "9" })*@
+                            @Html.DropDownListFor(model => model.BusinessType, ViewBag.DropDn_BusinessType as SelectList, "Select", new { @class = "input", @tabindex = "9" })
+                            @Html.ValidationMessageFor(model => model.BusinessType, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, "Phone Number", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "input", @maxlength = "10", @placeholder = "Phone Number", @tabindex = "11", @oninput = "validateNumericInput(this)" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Website, "Company Website", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "input", @maxlength = "200", @placeholder = "https://www.testwebsite.com", @tabindex = "10" } })
+                            @Html.ValidationMessageFor(model => model.Website, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="websiteMsg" class="text-danger" style="display:none;">Please enter a valid website URL!</div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.MobileNumber, "Mobile Number", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "input", @maxlength = "10", @placeholder = "Mobile Number", @tabindex = "12", @oninput = "validateNumericInput(this)" } })
+                            @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label req" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "input", @maxlength = "100", @placeholder = "This will be your login ID", @tabindex = "13" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="emailMsg" class="text-danger" style="display:none;">Please enter a valid email address.</div>
+                        <div id="emailDup" class="text-danger" style="display:none;">This email is already in use. Please enter a different email or log in.</div>
+                    </div>
+                    <div class="col-md-4" style="margin-top: 0.25rem;">
+                        <div class="form-group">
+                            @*@Html.LabelFor(model => model.ReType_Password, "Re-Type Password", htmlAttributes: new { @class = "control-label req" })*@
+                            <label for="password" class="control-label req">
+                                Re-Type Password
+                                <span id="toggleRePassword" style="cursor: pointer;">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </label>
+                            @Html.EditorFor(model => model.ReType_Password, new { htmlAttributes = new { @class = "input", @maxlength = "30", @placeholder = "Re-Type Password", @tabindex = "15", @id = "retypePassword" } })
+                            @Html.ValidationMessageFor(model => model.ReType_Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="passwordMessage" class="text-success" style="display:none;">Password Matched!</div>
+                        <div id="passwordMismatch" class="text-danger" style="display:none;">Please ensure both passwords are identical.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    @*<div class="col-md-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label req" })
+                            <div class="input-group">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input form-control", @maxlength = "30", @placeholder = "Password", @tabindex = "14", @id = "password" } })
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="pass_Validation" class="text-danger" style="display:none;">
+                            Password must be 8-30 characters long, contain at least one uppercase letter, one lowercase letter, one number, one special character, and must not contain spaces.
+                        </div>
+                    </div>*@
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="password" class="control-label req">
+                                Password
+                                <span id="togglePassword" style="cursor: pointer;">
+                                    <i class="fa fa-eye"></i>
+                                </span>
+                            </label>
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "input form-control", @maxlength = "30", @placeholder = "Password", @tabindex = "14", @id = "password", @type = "password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div id="pass_Validation" class="text-danger" style="display:none;">Password must be 8-30 characters long, contain at least one uppercase letter, one lowercase letter, one number, one special character, and must not contain spaces.</div>
+                    </div>
+
+                </div>
+                @*<div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>
+                                @Html.EditorFor(model => model.IsDeclarationAccepted)
+                                @Html.LabelFor(model => model.IsDeclarationAccepted, " By completing this form, the applicant agrees to the terms and conditions of AmeeShree Jewels.")
+                                @Html.ValidationMessageFor(model => model.IsDeclarationAccepted, "", new { @class = "text-danger" })
+                            </label>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+
+            <input class="login-button" type="submit" value="Sign Up">
+        }
+    </div>
+    <script src="~/AllJs/SignUp.js"></script>
+</body>
+</html>

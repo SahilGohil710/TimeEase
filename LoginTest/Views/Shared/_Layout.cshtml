@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/loader.css" rel="stylesheet" />
+    @*<link href="~/Content/Layout.css" rel="stylesheet" />*@
+    <link href="~/Content/AdminLTE/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/select2/css/select2.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css" rel="stylesheet" />
+    <script src="~/Content/AdminLTE/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/select2/js/select2.min.js"></script>
+    <link href="~/Content/CSS/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <script src="~/Content/alertify.min.js"></script>
+    <link href="~/Content/AdminLTE/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/loader.css" rel="stylesheet" />
+    <style>
+        .themeColor {
+            background: #467cc5;
+        }
+
+        /*.themeColor {
+            background: #002edc;
+        }*/
+
+        .main-footer {
+            /*border-top: 1px solid #060606;*/
+            color: #4e4e4e;
+        }
+
+        .navbar-light .navbar-nav .nav-link {
+            color: white;
+        }
+
+
+        .MENUHEAD_COLOR {
+            background: #467cc5;
+        }
+
+        .WHITE_TEXT {
+            color: white;
+        }
+
+        [class*=sidebar-light-] .nav-sidebar > .nav-item > .nav-treeview {
+            background-color: white;
+        }
+
+
+        .navbar {
+            border-radius: 0px;
+        }
+
+        .nav-sidebar .nav-treeview {
+            background: white;
+        }
+
+        .blink {
+            animation: blinker 1.5s linear infinite;
+            color: red;
+            font-family: sans-serif;
+        }
+
+        @@keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .navbar-nav > li > a {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
+        .card-info:not(.card-outline) > .card-header {
+            background-color: #82abe3;
+        }
+
+        .btn {
+            border-radius: 50px;
+            font-family: 'SourceSansPro-Regular', sans-serif;
+        }
+
+        .card-footer:last-child {
+            background: #d3d3d3;
+            border: solid 1px;
+        }
+
+        .card-info:not(.card-outline) > .card-header, .card-info:not(.card-outline) > .card-header a {
+            color: #000;
+            border: solid 1px;
+        }
+
+        thead {
+            background: #82abe3;
+        }
+
+        .fa-asterisk {
+            border-color: red;
+        }
+
+        .BORDER_RED {
+            border: black;
+        }
+
+        .BORDER_BLCK {
+            border: black;
+        }
+
+        .required:after {
+            content: " *";
+            color: #f00;
+        }
+
+        body {
+            font-family: 'SourceSansPro-Regular', sans-serif;
+            font-size: 15px;
+        }
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            font-family: 'SourceSansPro-Regular', sans-serif;
+        }
+
+        .box-title {
+            font-family: 'SourceSansPro-Regular', sans-serif;
+        }
+
+        .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+            border: 1px solid black;
+            white-space: nowrap;
+        }
+
+        .table {
+            border-left: solid 1px;
+            border-bottom: solid 1px;
+        }
+
+            .table caption + thead tr:first-child th, .table colgroup + thead tr:first-child th, .table thead:first-child tr:first-child th, .table caption + thead tr:first-child td, .table colgroup + thead tr:first-child td, .table thead:first-child tr:first-child td {
+                border-top: solid 1px;
+            }
+
+        .card-body {
+            border: 1px solid black;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .FormNameStyle {
+            font-family: 'SourceSansPro-Regular', sans-serif;
+            color: #428bca;
+            font-size: x-large;
+        }
+
+
+        .row {
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        button.dt-button.buttons-excel.buttons-html5 {
+            background-color: dodgerblue;
+            color: white;
+            border: white;
+            font-family: 'SourceSansPro-Regular', sans-serif;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+
+        .req:after {
+            content: "*";
+            color: red;
+        }
+
+
+        .custom-input {
+            width: 100%;
+            background: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            box-shadow: #cff0ff 0px 10px 10px -5px;
+            border-inline: 2px solid transparent;
+        }
+
+        .heading {
+            text-align: center;
+            font-weight: 900;
+            font-size: 30px;
+            color: rgb(16, 137, 211);
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-inline: 2px solid #12B1D1;
+        }
+
+        .form-control {
+            padding-right: 40px; /* Ensure the input field doesn't overlap the icon */
+        }
+
+        #password-error {
+            margin-top: 5px;
+            position: absolute;
+            top: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 2rem; /* Prevent overlapping validation messages */
+        }
+
+        /*.form-grid {
+            margin-bottom: 20px;
+        }*/
+
+        .form-group {
+            margin-bottom: 15px; /* Adjust space between form groups */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+            background-color: #f3f4f6;
+            background-image: url('../../Content/BGImage.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            /*height: 100%;
+            margin: 0;*/
+        }
+
+        .text-success {
+            color: darkseagreen;
+        }
+
+        .req:after {
+            content: "*";
+            color: red;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .container {
+            /*max-width: 900px;*/
+            max-width: 80%;
+            background: #F8F9FD;
+            background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
+            border-radius: 40px;
+            /*padding: 35px 45px;*/
+            border: 5px solid rgb(255, 255, 255);
+            box-shadow: rgba(133, 189, 215, 0.878) 0px 30px 30px -20px;
+            margin: 20px auto; /* Center the container with automatic margins */
+            text-align: center; /* Add this line to center-align text */
+        }
+
+        .form-grid {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+            .form-grid .full-width {
+                grid-column: span 2;
+            }
+
+        /* User options container */
+        .user-options {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .option-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            color: white;
+            background-color: #007BFF; /* Blue color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            /* Hover effect for buttons */
+            .option-button:hover {
+                background-color: #0056b3; /* Darker blue */
+            }
+
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+            background-color: #f3f4f6;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            padding: 15px 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-menu {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-item {
+            position: relative;
+        }
+
+            .menu-item a {
+                color: #333;
+                text-decoration: none; /* Ensures there is no underline */
+                font-weight: bold;
+                transition: color 0.3s ease-in-out;
+                padding: 10px;
+            }
+
+                /* Remove the underline on hover */
+                .menu-item a:hover {
+                    color: #007BFF; /* Diamond blue */
+                    text-decoration: none; /* Ensure no underline appears */
+                }
+
+                /* Remove the underline (the pseudo-element) */
+                .menu-item a::after {
+                    content: ''; /* Don't add anything */
+                    width: 0; /* Don't display the underline */
+                    height: 0;
+                    background-color: transparent; /* No color for underline */
+                    transition: none; /* No transition */
+                }
+
+                .menu-item a:hover::after {
+                    width: 100%;
+                }
+
+        /* Dropdown Menu (About Us) */
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            list-style: none;
+            margin: 0;
+            width: 200px; /* Set the width of the dropdown */
+        }
+
+            .submenu li a {
+                padding: 10px 20px;
+                display: block;
+                color: #333;
+                text-decoration: none;
+                font-weight: normal;
+                transition: background-color 0.3s ease;
+            }
+
+                .submenu li a:hover {
+                    background-color: #f1f1f1;
+                }
+
+        /* Optionally: if you have the submenu, keep it as is */
+        .menu-item:hover .submenu {
+            display: block;
+        }
+
+        .parallax {
+            height: 60vh;
+            /*background: url('path/to/diamond-background.jpg') center / cover fixed;*/
+            background-image: url('../../Content/crystal-textured-background-illustration_53876-80620.jpg');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+            .parallax h1 {
+                background: rgba(0, 0, 0, 0.4);
+                padding: 10px 20px;
+                border-radius: 5px;
+            }
+
+        .content {
+            padding: 50px 20px;
+            background: #fff;
+            color: #333;
+            text-align: center;
+        }
+
+            .content h2 {
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            .content p {
+                font-size: 1.1em;
+                line-height: 1.6;
+                max-width: 800px;
+                margin: auto;
+            }
+    </style>
+</head>
+<body>
+    <div class="loader-overlay">
+        <div class="loader"></div>
+    </div>
+    <header class="navbar">
+        <ul class="navbar-menu">
+            <li class="menu-item"><a href="@Url.Action("Index","Home")">Home</a></li>
+
+            @if (ViewBag.Logged_AorE == "A")
+            {
+                <li class="menu-item">
+                    <a href="#">Admin</a>
+                    <ul class="submenu">
+                        <li><a href="@Url.Action("Index","AddEmp")">Add Employee</a></li>
+                        <li><a href="@Url.Action("Index","AddAttendance")">Add Attendance</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="#">Approval</a>
+                    <ul class="submenu">
+                        <li><a href="@Url.Action("Index","LeaveApproval")">Leave Approval</a></li>
+                    </ul>
+                </li>
+            }
+
+            @if (ViewBag.Logged_AorE == "A" || ViewBag.Logged_AorE == "E")
+            {
+                <li class="menu-item">
+                    <a href="#">Employee Self Service</a>
+                    <ul class="submenu">
+                        <li><a href="@Url.Action("Index","SelfAttendance")">View Attendance</a></li>
+                        <li><a href="@Url.Action("Index","ApplyLeave")">Leave</a></li>
+                    </ul>
+                </li>
+            }
+
+            <!-- Account Section -->
+            <li class="menu-item">
+                <a href="#" id="account-btn">Account</a>
+                <ul class="submenu account-menu">
+                    <li><a href="@Url.Action("Logout", "Home")">Logout</a></li>
+                    <li><a href="@Url.Action("ForgotPassword","Home")">Change Password</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+
+    <!-- Account Card (Moved outside <ul>) -->
+    <div class="card" id="account-card" style="display: none;">
+        <div class="card_load"></div>
+        <div class="card_load_extreme_title" id="username"></div>
+        <div class="card_load_extreme_descripion" id="email"></div>
+    </div>
+
+    @*<div class="container body-content">*@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <div class="container body-content">
+        <footer class="main-footer">
+            <strong>&copy; @DateTime.Now.Year - Sahil Gohil.</strong> All rights reserved.
+        </footer>
+    </div>
+    @*</div>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @*<script src="~/AllJs/Layout.js"></script>*@
+
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/bootstrap/js/bootstrap-v5.3.2_JS.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/DTPicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/JS/jquery-3.6.0.min.js"></script>
+    <script src="~/Content/JS/jquery-ui.js"></script>
+    <script src="~/Content/AdminLTE/plugins/moment/2.29.4_moment.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/SweetAlert/sweetalert.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/jszip/jszip.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/select2/js/select2.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Content/AdminLTE/dist/js/adminlte.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var IsFailureMessage = '@TempData["IsFailureMessage"]';
+            var message = '@TempData["Message"]';
+            if (IsFailureMessage == "True") {
+                if (message != '')
+                    alertify.error(message);
+            }
+            else {
+                if (message != '')
+                    alertify.success(message);
+            }
+        })
+
+        // Optionally control the loader visibility
+        window.addEventListener('load', function () {
+            document.querySelector('.loader').style.display = 'none'; // Hide the loader after the page has loaded
+        });
+
+        // Optionally, show the loader when fetching data
+        function fetchData() {
+            document.querySelector('.loader').style.display = 'block'; // Show loader
+            // Simulate data fetching
+            setTimeout(() => {
+                document.querySelector('.loader').style.display = 'none'; // Hide loader after data fetching
+            }, 2000); // Example: fetching takes 2 seconds
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const accountBtn = document.getElementById("account-btn");
+            const accountCard = document.getElementById("account-card");
+            const usernameField = document.getElementById("username");
+            const emailField = document.getElementById("email");
+
+            // Fetch user details (Replace with actual server-side values)
+            const userData = {
+                username: "@ViewBag.Username", // Replace with actual Razor variable
+                email: "@ViewBag.Email"
+            };
+
+            accountBtn.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                // Toggle visibility
+                if (accountCard.style.display === "none") {
+                    accountCard.style.display = "block";
+                    usernameField.textContent = userData.username;
+                    emailField.textContent = userData.email;
+                } else {
+                    accountCard.style.display = "none";
+                }
+            });
+
+            // Hide when clicking outside
+            document.addEventListener("click", function (event) {
+                if (!accountBtn.contains(event.target) && !accountCard.contains(event.target)) {
+                    accountCard.style.display = "none";
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

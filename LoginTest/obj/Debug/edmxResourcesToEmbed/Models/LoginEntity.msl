@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VSMS_AmeeShreeModelStoreContainer" CdmEntityContainer="VSMS_AmeeShreeEntities">
+    <EntitySetMapping Name="M_Login_failed">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Login_failed">
+        <MappingFragment StoreEntitySet="M_Login_failed">
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="LogOn_Status" ColumnName="LogOn_Status" />
+          <ScalarProperty Name="LogOn" ColumnName="LogOn" />
+          <ScalarProperty Name="login_IP" ColumnName="login_IP" />
+          <ScalarProperty Name="AutoCode" ColumnName="AutoCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Login">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Login">
+        <MappingFragment StoreEntitySet="M_Login">
+          <ScalarProperty Name="logOn_IP" ColumnName="logOn_IP" />
+          <ScalarProperty Name="LoginOn" ColumnName="LoginOn" />
+          <ScalarProperty Name="LoggedIn" ColumnName="LoggedIn" />
+          <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="LoginId" ColumnName="LoginId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Users">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Users">
+        <MappingFragment StoreEntitySet="M_Users">
+          <ScalarProperty Name="ModifiedIP" ColumnName="ModifiedIP" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+          <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+          <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Address_Line2" ColumnName="Address_Line2" />
+          <ScalarProperty Name="Address_Line1" ColumnName="Address_Line1" />
+          <ScalarProperty Name="Emergency_PhoneNo" ColumnName="Emergency_PhoneNo" />
+          <ScalarProperty Name="isResignedYN" ColumnName="isResignedYN" />
+          <ScalarProperty Name="AorE" ColumnName="AorE" />
+          <ScalarProperty Name="InsertedIP" ColumnName="InsertedIP" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="TokenExpiration" ColumnName="TokenExpiration" />
+          <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_AddEmpGridData" FunctionName="VSMS_AmeeShreeModel.Store.sp_AddEmpGridData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VSMS_AmeeShreeModel.sp_AddEmpGridData_Result">
+          <ScalarProperty Name="AorE" ColumnName="AorE" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="isResignedYN" ColumnName="isResignedYN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="M_Shift">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Shift">
+        <MappingFragment StoreEntitySet="M_Shift">
+          <ScalarProperty Name="InsertedIP" ColumnName="InsertedIP" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+          <ScalarProperty Name="LunchEnd_Time" ColumnName="LunchEnd_Time" />
+          <ScalarProperty Name="LunchStart_Time" ColumnName="LunchStart_Time" />
+          <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+          <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+          <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Attendance">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Attendance">
+        <MappingFragment StoreEntitySet="M_Attendance">
+          <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+          <ScalarProperty Name="InsertedIP" ColumnName="InsertedIP" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="SecondHalf" ColumnName="SecondHalf" />
+          <ScalarProperty Name="FirstHalf" ColumnName="FirstHalf" />
+          <ScalarProperty Name="WorkHours" ColumnName="WorkHours" />
+          <ScalarProperty Name="OutTime" ColumnName="OutTime" />
+          <ScalarProperty Name="InTime" ColumnName="InTime" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="F_UserID" ColumnName="F_UserID" />
+          <ScalarProperty Name="AutoCode" ColumnName="AutoCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_ApplyLeave">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_ApplyLeave">
+        <MappingFragment StoreEntitySet="M_ApplyLeave">
+          <ScalarProperty Name="LeaveFor" ColumnName="LeaveFor" />
+          <ScalarProperty Name="ModifiedIP" ColumnName="ModifiedIP" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="LeaveAcceptedIP" ColumnName="LeaveAcceptedIP" />
+          <ScalarProperty Name="LeaveAcceptedBy" ColumnName="LeaveAcceptedBy" />
+          <ScalarProperty Name="LeaveAcceptedOn" ColumnName="LeaveAcceptedOn" />
+          <ScalarProperty Name="LeaveAcceptedYN" ColumnName="LeaveAcceptedYN" />
+          <ScalarProperty Name="InsertedIP" ColumnName="InsertedIP" />
+          <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="Month" ColumnName="Month" />
+          <ScalarProperty Name="LeaveTo" ColumnName="LeaveTo" />
+          <ScalarProperty Name="LeaveFrom" ColumnName="LeaveFrom" />
+          <ScalarProperty Name="F_LeaveTypeID" ColumnName="F_LeaveTypeID" />
+          <ScalarProperty Name="F_UserID" ColumnName="F_UserID" />
+          <ScalarProperty Name="AutoCode" ColumnName="AutoCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_LeaveType">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_LeaveType">
+        <MappingFragment StoreEntitySet="M_LeaveType">
+          <ScalarProperty Name="ModifiedIP" ColumnName="ModifiedIP" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="InsertedIP" ColumnName="InsertedIP" />
+          <ScalarProperty Name="InsertedBy" ColumnName="InsertedBy" />
+          <ScalarProperty Name="InsertedOn" ColumnName="InsertedOn" />
+          <ScalarProperty Name="Leave_Description" ColumnName="Leave_Description" />
+          <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+          <ScalarProperty Name="LeaveID" ColumnName="LeaveID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_LeaveApprovalGridData" FunctionName="VSMS_AmeeShreeModel.Store.sp_LeaveApprovalGridData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VSMS_AmeeShreeModel.sp_LeaveApprovalGridData_Result">
+          <ScalarProperty Name="AutoCode" ColumnName="AutoCode" />
+          <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="LeaveFrom" ColumnName="LeaveFrom" />
+          <ScalarProperty Name="LeaveTo" ColumnName="LeaveTo" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ApplyLeaveGridData" FunctionName="VSMS_AmeeShreeModel.Store.sp_ApplyLeaveGridData">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VSMS_AmeeShreeModel.sp_ApplyLeaveGridData_Result">
+          <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+          <ScalarProperty Name="LeaveFrom" ColumnName="LeaveFrom" />
+          <ScalarProperty Name="LeaveTo" ColumnName="LeaveTo" />
+          <ScalarProperty Name="LeavePostedOn" ColumnName="LeavePostedOn" />
+          <ScalarProperty Name="LeaveAcceptedYN" ColumnName="LeaveAcceptedYN" />
+          <ScalarProperty Name="LeaveAcceptedOn" ColumnName="LeaveAcceptedOn" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

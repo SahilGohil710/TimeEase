@@ -1,0 +1,181 @@
+﻿@model List<LoginTest.Models.SelfAttendanceModel>
+
+@{
+    ViewBag.Title = "Self Attendance";
+
+    // Get current month and year
+    int currentMonth = DateTime.Today.Month;
+    int currentYear = DateTime.Today.Year;
+
+    // Get the earliest allowed month (past 12 months)
+    DateTime past12MonthsDate = DateTime.Today.AddMonths(-11);
+    int earliestMonth = past12MonthsDate.Month;
+    int earliestYear = past12MonthsDate.Year;
+
+    // Set selected month and year (default to current month/year)
+    // Ensure ViewBag values are set correctly
+    int selectedMonth = ViewBag.SelectedMonth != null ? ViewBag.SelectedMonth : currentMonth;
+    int selectedYear = ViewBag.SelectedYear != null ? ViewBag.SelectedYear : currentYear;
+
+    int midPoint = (int)Math.Ceiling(Model.Count / 2.0); // Ensure proper split for odd counts
+
+    // Generate months dropdown (only past 12 months)
+    // Generate months dropdown (from January of the earliest allowed year)
+    List<SelectListItem> months = new List<SelectListItem>();
+
+    for (int i = 1; i <= 12; i++) // Loop from January (1) to December (12)
+    {
+        months.Add(new SelectListItem
+        {
+            Value = i.ToString(),
+            Text = new DateTime(1, i, 1).ToString("MMMM"), // Display month name (e.g., "January")
+            Selected = (i == selectedMonth)
+        });
+    }
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "SelfAttendance", FormMethod.Get, new { id = "monthForm" }))
+{
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="margin-bottom:3px">
+            <label>Select Month:</label>
+            @Html.DropDownList("month",
+        new SelectList(months, "Value", "Text", ViewBag.SelectedMonth),
+        new { @class = "form-control", id = "monthDropdown" })
+        </div>
+
+        <div class="col-md-3" style="margin-bottom:3px">
+            <label>Select Year:</label>
+            <select id="yearDropdown" name="year" class="form-control">
+                @for (int y = earliestYear; y <= currentYear; y++)
+                {
+                    <option value="@y" @(y == ViewBag.SelectedYear ? "selected" : "")>@y</option>
+                }
+            </select>
+        </div>
+    </div>
+}
+
+
+<!-- JavaScript: Auto-submit form when month changes & Restrict Future Dates -->
+<script src="~/Content/JS/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#monthDropdown, #yearDropdown").change(function () {
+            let selectedMonth = parseInt($("#monthDropdown").val()); // Get selected month
+            let selectedYear = parseInt($("#yearDropdown").val()); // Get selected year
+
+            let currentMonth = @currentMonth;
+            let currentYear = @currentYear;
+
+            // Prevent selecting future months
+            if (selectedYear > currentYear || (selectedYear === currentYear && selectedMonth > currentMonth)) {
+                alert("You cannot select a future month.");
+                return; // Prevent auto-reset
+            }
+
+            $("#monthForm").submit();
+        });
+
+    });
+</script>
+
+<div class="row">
+    <!-- Left Table: First Half of the Month -->
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Date</th>
+                    <th style="text-align:center">Day</th>
+                    <th style="text-align:center">Time In</th>
+                    <th style="text-align:center">Time Out</th>
+                    <th style="text-align:center">Work Hours</th>
+                    <th style="text-align:center">FH</th>
+                    <th style="text-align:center">SH</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Take(midPoint)) // First half of the month
+                {
+                    <tr>
+                        <td>@item.Date.ToString("dd-MMM-yyyy")</td>
+                        <td>@item.Day</td>
+                        <td>@(item.TimeIn.HasValue ? item.TimeIn.Value.ToString(@"hh\:mm") : "-")</td>
+                        <td>@(item.TimeOut.HasValue ? item.TimeOut.Value.ToString(@"hh\:mm") : "-")</td>
+                        <td>@(item.WorkHours.HasValue ? item.WorkHours.Value.ToString("0.00") : "-")</td>
+                        <td>@(item.FirstHalf)</td>
+                        <td>@(item.SecondHalf)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Right Table: Second Half of the Month -->
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Date</th>
+                    <th style="text-align:center">Day</th>
+                    <th style="text-align:center">Time In</th>
+                    <th style="text-align:center">Time Out</th>
+                    <th style="text-align:center">Work Hours</th>
+                    <th style="text-align:center">FH</th>
+                    <th style="text-align:center">SH</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Skip(midPoint)) // Second half of the month
+                {
+
+                    <tr>
+                        <td>@item.Date.ToString("dd-MMM-yyyy")</td>
+                        <td>@item.Day</td>
+                        <td>@(item.TimeIn.HasValue ? item.TimeIn.Value.ToString(@"hh\:mm") : "-")</td>
+                        <td>@(item.TimeOut.HasValue ? item.TimeOut.Value.ToString(@"hh\:mm") : "-")</td>
+                        <td>@(item.WorkHours.HasValue ? item.WorkHours.Value.ToString("0.00") : "-")</td>
+                        <td>@(item.FirstHalf)</td>
+                        <td>@(item.SecondHalf)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h4>Attendance Summary</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="text-align:center">Present Days</th>
+                    <th style="text-align:center">Weekly Off</th>
+                    <th style="text-align:center">Payable Days</th>
+                    <th style="text-align:center">LWP</th>
+                    <th style="text-align:center">Non Payable Days</th>
+                    <th style="text-align:center">Total Days</th>
+                    <th style="text-align:center">Salary for</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align:center">@ViewBag.PresentDays</td>
+                    <td style="text-align:center">@ViewBag.WeeklyOff</td>
+                    <td style="text-align:center">@ViewBag.PayableDays</td>
+                    <td style="text-align:center">@ViewBag.LWP</td>
+                    <td style="text-align:center">@ViewBag.NonPayableDays.ToString("0.0")</td>
+                    <td style="text-align:center">@ViewBag.TotalDays</td>
+                    <td style="text-align:center">@ViewBag.SalaryFor</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

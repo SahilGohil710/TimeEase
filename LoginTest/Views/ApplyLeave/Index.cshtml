@@ -1,0 +1,77 @@
+﻿@model LoginTest.Models.ApplyleaveModel
+
+@{
+    ViewBag.Title = "Leave List";
+
+    int currentMonth = DateTime.Today.Month;
+    int currentYear = DateTime.Today.Year;
+
+    DateTime past12MonthsDate = DateTime.Today.AddMonths(-11);
+    int earliestMonth = past12MonthsDate.Month;
+    int earliestYear = past12MonthsDate.Year;
+
+    // Ensure default values are correctly assigned if ViewBag values are null
+    int selectedMonth = ViewBag.SelectedMonth != null ? Convert.ToInt32(ViewBag.SelectedMonth) : currentMonth;
+    int selectedYear = ViewBag.SelectedYear != null ? Convert.ToInt32(ViewBag.SelectedYear) : currentYear;
+
+    List<SelectListItem> months = new List<SelectListItem>();
+
+    for (int i = 1; i <= 12; i++) // Loop from January (1) to December (12)
+    {
+        months.Add(new SelectListItem
+        {
+            Value = i.ToString(),
+            Text = new DateTime(1, i, 1).ToString("MMMM"), // Display month name (e.g., "January")
+            Selected = (i == selectedMonth) // Ensure correct selection
+        });
+    }
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "ApplyLeave", new { id = "ApplyLeavefrm", role = "form", enctype = "multipart/form-data" }))
+{
+
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    @*<div class="card-header with-border" style="border-color: black;">*@
+    <div class="float-end" style="margin-left:90%">
+        <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Apply Leave</a>
+    </div>
+    @*</div>*@
+
+    <div class="row">
+        <div class="row">
+            <div class="col-md-3" style="margin-bottom:3px">
+                <label>Select Month:</label>
+                @Html.DropDownList("month",
+        new SelectList(months, "Value", "Text", selectedMonth),
+        new { @class = "form-control", id = "monthDropdown" })
+            </div>
+
+            <div class="col-md-3" style="margin-bottom:3px">
+                <label>Select Year:</label>
+                <select id="yearDropdown" name="year" class="form-control">
+                    @for (int y = earliestYear; y <= currentYear; y++)
+                    {
+                        <option value="@y" @(y == selectedYear ? "selected" : "")>@y</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-1" style="margin-top:24px">
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" id="btnShow" value="Show" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width:100%">
+        <table class="table table-bordered table-hover dataTable dtr-inline" cellspacing="0" id="tbl_ApplyLeaveList">
+            <tbody></tbody>
+        </table>
+    </div>
+}
+<script src="~/Content/JS/jquery-3.6.0.min.js"></script>
+<script src="~/AllJs/ApplyLeave.js"></script>

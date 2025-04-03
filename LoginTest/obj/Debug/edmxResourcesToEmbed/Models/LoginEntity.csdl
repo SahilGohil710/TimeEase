@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VSMS_AmeeShreeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="VSMS_AmeeShreeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="M_Login_failed" EntityType="VSMS_AmeeShreeModel.M_Login_failed" />
+    <EntitySet Name="M_Login" EntityType="VSMS_AmeeShreeModel.M_Login" />
+    <EntitySet Name="M_Users" EntityType="VSMS_AmeeShreeModel.M_Users" />
+    <FunctionImport Name="sp_AddEmpGridData" ReturnType="Collection(VSMS_AmeeShreeModel.sp_AddEmpGridData_Result)">
+      <Parameter Name="FromDate" Mode="In" Type="String" />
+      <Parameter Name="ToDate" Mode="In" Type="String" />
+      <Parameter Name="ApplicationStatus" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="M_Shift" EntityType="VSMS_AmeeShreeModel.M_Shift" />
+    <EntitySet Name="M_Attendance" EntityType="VSMS_AmeeShreeModel.M_Attendance" />
+    <AssociationSet Name="FK_M_Attendance_M_Users" Association="VSMS_AmeeShreeModel.FK_M_Attendance_M_Users">
+      <End Role="M_Users" EntitySet="M_Users" />
+      <End Role="M_Attendance" EntitySet="M_Attendance" />
+    </AssociationSet>
+    <EntitySet Name="M_ApplyLeave" EntityType="VSMS_AmeeShreeModel.M_ApplyLeave" />
+    <EntitySet Name="M_LeaveType" EntityType="VSMS_AmeeShreeModel.M_LeaveType" />
+    <AssociationSet Name="FK_M_ApplyLeave_M_LeaveType" Association="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_LeaveType">
+      <End Role="M_LeaveType" EntitySet="M_LeaveType" />
+      <End Role="M_ApplyLeave" EntitySet="M_ApplyLeave" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_ApplyLeave_M_Users" Association="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_Users">
+      <End Role="M_Users" EntitySet="M_Users" />
+      <End Role="M_ApplyLeave" EntitySet="M_ApplyLeave" />
+    </AssociationSet>
+    <FunctionImport Name="sp_LeaveApprovalGridData" ReturnType="Collection(VSMS_AmeeShreeModel.sp_LeaveApprovalGridData_Result)" />
+    <FunctionImport Name="sp_ApplyLeaveGridData" ReturnType="Collection(VSMS_AmeeShreeModel.sp_ApplyLeaveGridData_Result)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="UserID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="M_Login_failed">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login_IP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="LogOn" Type="DateTime" Precision="3" />
+    <Property Name="LogOn_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="M_Login">
+    <Key>
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmailId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="SessionId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LoggedIn" Type="Boolean" />
+    <Property Name="LoginOn" Type="DateTime" Precision="3" />
+    <Property Name="logOn_IP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <ComplexType Name="sp_GetUserDetails_Result">
+    <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="FullName" Nullable="true" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="PhoneNo" Nullable="true" MaxLength="15" />
+    <Property Type="String" Name="Designation" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="OorE" Nullable="false" MaxLength="8" />
+    <Property Type="String" Name="Password" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="M_Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ResetPasswordToken" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="TokenExpiration" Type="DateTime" Precision="3" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="InsertedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AorE" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="isResignedYN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Emergency_PhoneNo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line1" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="Address_Line2" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="JobTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="JoinDate" Type="DateTime" Precision="3" />
+    <Property Name="WorkLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="M_Attendance" Relationship="VSMS_AmeeShreeModel.FK_M_Attendance_M_Users" FromRole="M_Users" ToRole="M_Attendance" />
+    <NavigationProperty Name="M_ApplyLeave" Relationship="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_Users" FromRole="M_Users" ToRole="M_ApplyLeave" />
+  </EntityType>
+  <ComplexType Name="sp_AddEmpGridData_Result">
+    <Property Type="String" Name="AorE" Nullable="true" MaxLength="8" />
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="PhoneNo" Nullable="true" MaxLength="10" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="true" />
+    <Property Type="String" Name="isResignedYN" Nullable="true" MaxLength="8" />
+  </ComplexType>
+  <EntityType Name="M_Shift">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Start_Time" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="End_Time" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="LunchStart_Time" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="LunchEnd_Time" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="InsertedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="M_Attendance">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="F_UserID" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="InTime" Type="Time" Precision="7" />
+    <Property Name="OutTime" Type="Time" Precision="7" />
+    <Property Name="WorkHours" Type="Decimal" Precision="5" Scale="2" />
+    <Property Name="FirstHalf" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="SecondHalf" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="InsertedIP" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="M_Users" Relationship="VSMS_AmeeShreeModel.FK_M_Attendance_M_Users" FromRole="M_Attendance" ToRole="M_Users" />
+  </EntityType>
+  <Association Name="FK_M_Attendance_M_Users">
+    <End Type="VSMS_AmeeShreeModel.M_Users" Role="M_Users" Multiplicity="0..1" />
+    <End Type="VSMS_AmeeShreeModel.M_Attendance" Role="M_Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="M_Attendance">
+        <PropertyRef Name="F_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="M_ApplyLeave">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="F_UserID" Type="Int32" />
+    <Property Name="F_LeaveTypeID" Type="Int32" />
+    <Property Name="LeaveFrom" Type="DateTime" Precision="0" />
+    <Property Name="LeaveTo" Type="DateTime" Precision="0" />
+    <Property Name="Month" Type="Int32" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="M_LeaveType" Relationship="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_LeaveType" FromRole="M_ApplyLeave" ToRole="M_LeaveType" />
+    <NavigationProperty Name="M_Users" Relationship="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_Users" FromRole="M_ApplyLeave" ToRole="M_Users" />
+    <Property Name="LeaveAcceptedYN" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="LeaveAcceptedOn" Type="DateTime" Precision="3" />
+    <Property Name="LeaveAcceptedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveAcceptedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LeaveFor" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="M_LeaveType">
+    <Key>
+      <PropertyRef Name="LeaveID" />
+    </Key>
+    <Property Name="LeaveID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeaveType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Leave_Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="InsertedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ModifiedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="M_ApplyLeave" Relationship="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_LeaveType" FromRole="M_LeaveType" ToRole="M_ApplyLeave" />
+  </EntityType>
+  <Association Name="FK_M_ApplyLeave_M_LeaveType">
+    <End Type="VSMS_AmeeShreeModel.M_LeaveType" Role="M_LeaveType" Multiplicity="0..1" />
+    <End Type="VSMS_AmeeShreeModel.M_ApplyLeave" Role="M_ApplyLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_LeaveType">
+        <PropertyRef Name="LeaveID" />
+      </Principal>
+      <Dependent Role="M_ApplyLeave">
+        <PropertyRef Name="F_LeaveTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_ApplyLeave_M_Users">
+    <End Type="VSMS_AmeeShreeModel.M_Users" Role="M_Users" Multiplicity="0..1" />
+    <End Type="VSMS_AmeeShreeModel.M_ApplyLeave" Role="M_ApplyLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="M_ApplyLeave">
+        <PropertyRef Name="F_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="sp_LeaveApprovalGridData_Result">
+    <Property Type="Int32" Name="AutoCode" Nullable="false" />
+    <Property Type="String" Name="LeaveType" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FullName" Nullable="true" MaxLength="150" />
+    <Property Type="DateTime" Name="LeaveFrom" Nullable="true" />
+    <Property Type="DateTime" Name="LeaveTo" Nullable="true" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="sp_ApplyLeaveGridData_Result">
+    <Property Type="String" Name="LeaveType" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="LeaveFrom" Nullable="true" />
+    <Property Type="DateTime" Name="LeaveTo" Nullable="true" />
+    <Property Type="DateTime" Name="LeavePostedOn" Nullable="true" />
+    <Property Type="String" Name="LeaveAcceptedYN" Nullable="false" MaxLength="8" />
+    <Property Type="DateTime" Name="LeaveAcceptedOn" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>

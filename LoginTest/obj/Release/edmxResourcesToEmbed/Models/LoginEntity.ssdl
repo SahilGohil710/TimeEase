@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VSMS_AmeeShreeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="M_BusinessType">
+    <Key>
+      <PropertyRef Name="BusinessTypeID" />
+    </Key>
+    <Property Name="BusinessTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsActiveYN" Type="char" MaxLength="1" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'AmeeShree_Test.dbo.M_Login' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="M_Login">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+      <PropertyRef Name="Emailid" />
+    </Key>
+    <Property Name="AutoCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Emailid" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="30" />
+    <Property Name="LogIn_On" Type="datetime" />
+    <Property Name="Login_Ip" Type="int" />
+  </EntityType>
+  <EntityType Name="M_State">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StateName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IsActiveYN" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="M_Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Designation" Type="nvarchar" MaxLength="100" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" MaxLength="255" />
+    <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="PinCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="Website" Type="nvarchar" MaxLength="100" />
+    <Property Name="BusinessType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="255" />
+    <Property Name="IsDeclarationAccepted" Type="bit" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedIP" Type="nvarchar" MaxLength="45" />
+    <Property Name="ResetPasswordToken" Type="nvarchar" MaxLength="255" />
+    <Property Name="TokenExpiration" Type="datetime" />
+  </EntityType>
+  <Function Name="sp_insertSignup_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Designation" Type="nvarchar" Mode="In" />
+    <Parameter Name="CompanyName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Address" Type="nvarchar" Mode="In" />
+    <Parameter Name="CityName" Type="nvarchar" Mode="In" />
+    <Parameter Name="State" Type="nvarchar" Mode="In" />
+    <Parameter Name="PinCode" Type="int" Mode="In" />
+    <Parameter Name="Country" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="MobileNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="Website" Type="nvarchar" Mode="In" />
+    <Parameter Name="BusinessType" Type="nvarchar" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar" Mode="In" />
+    <Parameter Name="isDeclarationAccepted" Type="bit" Mode="In" />
+    <Parameter Name="CreatedOn" Type="datetime" Mode="In" />
+    <Parameter Name="CreatedIP" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="VSMS_AmeeShreeModelStoreContainer">
+    <EntitySet Name="M_BusinessType" EntityType="Self.M_BusinessType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_State" EntityType="Self.M_State" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Users" EntityType="Self.M_Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Login" EntityType="Self.M_Login" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [M_Login].[AutoCode] AS [AutoCode], 
+    [M_Login].[Emailid] AS [Emailid], 
+    [M_Login].[Password] AS [Password], 
+    [M_Login].[LogIn_On] AS [LogIn_On], 
+    [M_Login].[Login_Ip] AS [Login_Ip]
+    FROM [dbo].[M_Login] AS [M_Login]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,67 @@
+﻿@model LoginTest.Models.AddAttendanceModel
+
+@{
+    ViewBag.Title = "Bulk Upload for Attendance";
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "AddAttendance", FormMethod.Post, new { id = "AttendanceBulkUpload", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="loader-overlay">
+        <div class="loader"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-info">
+                <div class="container">
+                    <h3>@ViewBag.Title</h3>
+                </div>
+                <div class="card-header with-border">
+                    @*<h2>@ViewBag.Title</h2>*@
+                </div>
+                <div class="card-body">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Select Excel Template</label>
+                            <input type="file" id="file" name="file" class="form-control">
+                        </div>
+                        <div class="col-md-4" style="margin-top:25px">
+                            <input type="button" id="downloadSample" class="btn btn-warning btn_empgrid" onclick="location.href='@Url.Action("DSASampleFormatExcel", "AddAttendance")'" value="Download Format" />
+                            <input type="button" id="clear" class="btn btn-warning" value="Clear" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Note:</label>
+                            <p style="text-align:left;">1. Correct or remove any error records.</p>
+                            <p style="text-align:left;">2. Use the 24-hour time format only.</p>
+                            <p style="text-align:left;">3. The InTime and OutTime format must be in this format: 09.30 (the decimal is mandatory).</p>
+                            <p style="text-align:left;">4. Use the date format "dd-MMM-yyyy" (e.g., 01-Jan-2025) only.</p>
+                        </div>
+
+                    </div>
+                    <div class="icn" style="display:none">
+                        <span class="emplabel label-warning" id="totalAttendanceData"></span>
+                        <span><i class="fa fa-square" style="color:red;margin-right:5px;"></i>Record with Error</span>
+                        <span><i class="fa fa-square" style="color:forestgreen;margin-right:5px;"></i>Clear Record</span>
+                    </div>
+                    <div style="width:100%; margin:0 auto">
+                        <table class="table table-bordered table-hover dataTable dtr-inline" cellspacing="0" id="AttendanceBulkUploadTable">
+                            <thead><tr></tr></thead>
+                            <tbody><tr></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <input type="button" id="importExcel" class="btn btn-primary" value="Upload" style="display:none;" />
+                    <a href="@Url.Action("Index")" class="btn btn-info float-right"><i class="fa fa-arrow-circle-left"></i> Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/AllJs/AddAttendance.js"></script>

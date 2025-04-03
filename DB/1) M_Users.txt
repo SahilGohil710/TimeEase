@@ -1,0 +1,46 @@
+
+/****** Object:  Table [dbo].[M_Users]    Script Date: 12/9/2024 12:05:41 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[M_Users](
+	[CompanyID] [int] IDENTITY(1,1) NOT NULL,
+	[CompanyName] [nvarchar](100) NULL,
+	[RegisteredAddress] [nvarchar](200) NULL,
+	[BusinessAddress] [nvarchar](100) NULL,
+	[State] [nvarchar](200) NULL,
+	[PinCode] [nvarchar](20) NULL,
+	[PhoneNo] [nvarchar](20) NULL,
+	[Website] [nvarchar](100) NULL,
+	[CompanyEmail] [nvarchar](100) NULL,
+	[Natureof_BusinessActivity] [nvarchar](200) NULL,
+	[Incorp_Certy_No] [nvarchar](50) NULL,
+	[GSTIN] [nvarchar](20) NULL,
+	[PAN] [nvarchar](10) NULL,
+	[MSME_No] [nvarchar](100) NULL,
+	[Natureof_Organization] [nvarchar](100) NULL,
+	[BankName] [nvarchar](100) NULL,
+	[Nameof_Acc] [nvarchar](100) NULL,
+	[Addressof_Bank] [nvarchar](200) NULL,
+	[AccNo] [nvarchar](50) NULL,
+	[IFSC] [nvarchar](20) NULL,
+	[Branch] [nvarchar](100) NULL,
+	[SwiftCode] [nvarchar](20) NULL,
+	[Typeof_Acc] [nvarchar](100) NULL,
+	[MICR_Code] [nvarchar](20) NULL,
+	[CreatedOn] [datetime] NULL,
+	[CreatedIP] [varchar](30) NULL,
+	[ModifiedOn] [datetime] NULL,
+	[ModifiedIP] [varchar](30) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CompanyID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[M_Users] ADD  DEFAULT (getdate()) FOR [CreatedOn]
+GO

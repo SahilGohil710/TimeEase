@@ -1,0 +1,46 @@
+CREATE PROCEDURE sp_GetUserDetails  
+    @OorE CHAR(1),  
+    @CompanyID INT  
+AS  
+BEGIN  
+    SET NOCOUNT ON;  
+ IF(@OorE = 'O') -- For Owner Only their companies Emp will be visible  
+ BEGIN  
+    SELECT DISTINCT   
+        MU.CompanyName,  
+        MUD.FullName,  
+        MUD.Email,  
+        MUD.PhoneNo,  
+        MUD.Designation,  
+        CASE   
+            WHEN MUD.OorE = 'O' THEN 'Owner'  
+            WHEN MUD.OorE = 'E' THEN 'Employee'  
+            WHEN MUD.OorE = 'A' THEN 'Admin'  
+            ELSE 'Unknown'  
+        END AS OorE,  
+        MUD.Password  
+    FROM M_Users MU  
+    INNER JOIN M_UserDetails MUD ON MU.CompanyID = MUD.F_CompanyID  
+    INNER JOIN M_UserDetails_Attachments MUDA ON MU.CompanyID = MUDA.F_CompanyID  
+ WHERE MU.CompanyID = @CompanyID and (MUD.OorE = 'O' OR MUD.OorE = 'E')  
+ END  
+ ELSE IF (@OorE = 'A') -- For Admin Every Companies Emp will be visible  
+ BEGIN  
+  SELECT DISTINCT   
+        MU.CompanyName,  
+        MUD.FullName,  
+        MUD.Email,  
+        MUD.PhoneNo,  
+        MUD.Designation,  
+        CASE   
+            WHEN MUD.OorE = 'O' THEN 'Owner'  
+            WHEN MUD.OorE = 'E' THEN 'Employee'  
+            WHEN MUD.OorE = 'A' THEN 'Admin'  
+            ELSE 'Unknown'  
+        END AS OorE,  
+        MUD.Password  
+    FROM M_Users MU  
+    INNER JOIN M_UserDetails MUD ON MU.CompanyID = MUD.F_CompanyID  
+    INNER JOIN M_UserDetails_Attachments MUDA ON MU.CompanyID = MUDA.F_CompanyID  
+ END  
+END;  

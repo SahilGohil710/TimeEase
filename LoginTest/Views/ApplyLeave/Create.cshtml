@@ -1,0 +1,74 @@
+﻿@model LoginTest.Models.ApplyleaveModel
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Apply Leave";
+    var validationErrors = TempData["ValidationErrors"] as string;
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+<link href="~/Content/AdminLTE/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Create", "ApplyLeave", FormMethod.Post, new { id = "id_ApplyLeave", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="validationErrors" value='@Html.Raw(JsonConvert.SerializeObject(ViewBag.ValidationErrors ?? new List<string>()))' />
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    <div id="errorContainer" class="alert alert-danger" style="display: none;">
+        <ul id="errorList"></ul>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>Leave Type:</label>
+            @Html.DropDownListFor(m => m.LeaveType, ViewBag.LeaveTypes as List<SelectListItem>, "Select Leave Type", new { @class = "custom-input" })
+            @*@Html.ValidationMessageFor(m => m.LeaveType)*@
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.FromDate, "From Date", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.FromDate, "{0:d}", new { htmlAttributes = new { @id = "id_fromDate", @class = "datepicker custom-input", @autocomplete = "off", @placeholder = "DD-MMM-YYYY", @readonly = "readonly", @tabindex = "4" } })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Reason, "Reason", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "custom-input", @maxlength = "250", @tabindex = "5" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ToDate, "To Date", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.ToDate, "{0:d}", new { htmlAttributes = new { @id = "id_toDate", @class = "datepicker custom-input", @autocomplete = "off", @placeholder = "DD-MMM-YYYY", @readonly = "readonly", @tabindex = "4" } })
+            <span id="dobError" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6" style="margin-left:25%">
+        <div class="form-group">
+            <label>Leave Duration:</label>
+            <div>
+                @Html.RadioButtonFor(model => model.LeaveDuration, "First Half", new { @id = "firstHalf" })
+                <label for="firstHalf">First Half</label>
+
+                @Html.RadioButtonFor(model => model.LeaveDuration, "Second Half", new { @id = "secondHalf" })
+                <label for="secondHalf">Second Half</label>
+
+                @Html.RadioButtonFor(model => model.LeaveDuration, "Full Day", new { @id = "fullDay", @checked = "checked" })
+                <label for="fullDay">Full Day</label>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6" style="margin-left:25%">
+        <div class="form-group">
+            <input type="submit" id="btnSubmit" value="Submit" class="btn btn-success me-2" />
+            <a href="@Url.Action("Index")" class="btn btn-info">
+                <i class="fa fa-arrow-circle-o-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script src="~/AllJs/ApplyLeave.js"></script>

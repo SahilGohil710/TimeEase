@@ -1,0 +1,26 @@
+CREATE PROCEDURE sp_addAttachments      
+@F_AutoCode INT      
+,@F_CompanyID INT      
+,@OorE char(1)      
+,@AttachmentPath varchar(200)      
+,@AttachmentName varchar(200)      
+,@CreatedOn DateTime      
+,@CreatedIp varchar(30)      
+AS      
+BEGIN      
+      
+INSERT INTO [dbo].[M_UserDetails_Attachments]      
+           ([F_AutoCode]      
+           ,[F_CompanyID]      
+           ,[OorE]      
+           ,[AttachmentPath]      
+           ,[AttachmentName]      
+           ,[CreatedOn]      
+           ,[CreatedIp])      
+     VALUES      
+           (      
+     @F_AutoCode,    
+  @F_CompanyID,@OorE,@AttachmentPath,@AttachmentName,@CreatedOn,@CreatedIp      
+     )      
+      
+END

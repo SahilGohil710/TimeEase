@@ -1,0 +1,193 @@
+﻿@model LoginTest.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/AdminLTE/plugins/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/Content/AdminLTE/plugins/iCheck/icheck.min.js"></script>
+    <script src="~/Content/alertify.min.js"></script>
+    <script src="~/EncryptDecryptScripts/md5.js"></script>
+    <script src="~/EncryptDecryptScripts/aes.js"></script>
+    <link href="~/Content/AdminLTE/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/all.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="~/Content/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/default.min.css" rel="stylesheet" />
+    <link href="~/Content/Login.css" rel="stylesheet" />
+    <style>
+        .wave-group {
+            position: relative;
+            margin: 20px 0;
+        }
+
+            .wave-group .input {
+                font-size: 16px;
+                padding: 10px 10px 10px 5px;
+                display: block;
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid #515151;
+                background: transparent;
+            }
+
+                .wave-group .input:focus {
+                    outline: none;
+                }
+
+            .wave-group .label {
+                color: #999;
+                font-size: 18px;
+                font-weight: normal;
+                position: absolute;
+                pointer-events: none;
+                left: 5px;
+                top: 10px;
+                display: flex;
+            }
+
+            .wave-group .label-char {
+                transition: 0.2s ease all;
+                transition-delay: calc(var(--index) * 0.05s);
+            }
+
+            .wave-group .input:focus ~ .label .label-char,
+            .wave-group .input:valid ~ .label .label-char {
+                transform: translateY(-20px);
+                font-size: 14px;
+                color: #5264ae;
+            }
+
+            .wave-group .bar {
+                position: relative;
+                display: block;
+                width: 100%;
+            }
+
+                .wave-group .bar:before,
+                .wave-group .bar:after {
+                    content: "";
+                    height: 2px;
+                    width: 0;
+                    bottom: 1px;
+                    position: absolute;
+                    background: #5264ae;
+                    transition: 0.2s ease all;
+                    -moz-transition: 0.2s ease all;
+                    -webkit-transition: 0.2s ease all;
+                }
+
+                .wave-group .bar:before {
+                    left: 50%;
+                }
+
+                .wave-group .bar:after {
+                    right: 50%;
+                }
+
+            .wave-group .input:focus ~ .bar:before,
+            .wave-group .input:focus ~ .bar:after {
+                width: 50%;
+            }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <div class="container">
+
+        @if (TempData["SuccessResetMsg"] != null)
+        {
+            <script>
+                alertify.success('@TempData["SuccessResetMsg"]');
+            </script>
+        }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <script>
+                alertify.success('@TempData["SuccessMessage"]');
+            </script>
+        }
+
+        <div class="heading">AmeeShree Jewels</div>
+        <form action="@Url.Action("Login", "Home")" method="post" class="form">
+
+            @if (TempData["validationMessage_forLogin"] != null)
+            {
+                <script>
+                    alertify.error(@Html.Raw(Json.Encode(TempData["validationMessage_forLogin"])));
+                </script>
+            }
+
+            <div class="wave-group">
+                <input required class="input" type="email" name="Email" id="email" maxlength="100" />
+                <span class="bar"></span>
+                <label class="label">
+                    <span style="--index: 0" class="label-char">E</span>
+                    <span style="--index: 1" class="label-char">-</span>
+                    <span style="--index: 2" class="label-char">m</span>
+                    <span style="--index: 3" class="label-char">a</span>
+                    <span style="--index: 4" class="label-char">i</span>
+                    <span style="--index: 5" class="label-char">l</span>
+                </label>
+            </div>
+            <div class="wave-group">
+                <input required class="input" type="password" name="Password" id="password" maxlength="30" />
+                <span class="bar"></span>
+                <label class="label">
+                    <span style="--index: 0" class="label-char">P</span>
+                    <span style="--index: 1" class="label-char">a</span>
+                    <span style="--index: 2" class="label-char">s</span>
+                    <span style="--index: 3" class="label-char">s</span>
+                    <span style="--index: 4" class="label-char">w</span>
+                    <span style="--index: 5" class="label-char">o</span>
+                    <span style="--index: 6" class="label-char">r</span>
+                    <span style="--index: 7" class="label-char">d</span>
+                </label>
+            </div>
+            <span class="forgot-password">
+                <a href="@Url.Action("ForgotPassword", "Home")">Forgot Password?</a>
+            </span>
+            <input class="login-button" type="submit" value="Sign In">
+        </form>
+        <div class="social-account-container">
+            <span class="title">Or</span>
+            <div class="cntainer mt-4">
+                <a href="@Url.Action("SignUp", "Home")" class="button type--C">
+                    <div class="button__line"></div>
+                    <div class="button__line"></div>
+                    <span class="button__text">SIGN-UP</span>
+                    <div class="button__drow1"></div>
+                    <div class="button__drow2"></div>
+                </a>
+            </div>
+        </div>
+        @*<span class="agreement"><a href="#">Learn user licence agreement</a></span>*@
+    </div>
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+
+        alertify.defaults = {
+            delay: 5000 // Customize the duration for the alert to be visible
+        };
+
+        @*// Wait for the document to be ready
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if there is a success message in ViewBag
+            var successMessage = '@ViewBag.SuccessMessage';
+            if (successMessage) {
+                // Use Alertify to display the success message
+                alertify.success(successMessage);
+            }
+        });*@
+    </script>
+</body>
+</html>

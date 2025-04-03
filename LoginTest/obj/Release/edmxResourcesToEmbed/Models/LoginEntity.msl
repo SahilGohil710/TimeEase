@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VSMS_AmeeShreeModelStoreContainer" CdmEntityContainer="VSMS_AmeeShreeEntities">
+    <EntitySetMapping Name="M_Users">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Users">
+        <MappingFragment StoreEntitySet="M_Users">
+          <ScalarProperty Name="TokenExpiration" ColumnName="TokenExpiration" />
+          <ScalarProperty Name="ResetPasswordToken" ColumnName="ResetPasswordToken" />
+          <ScalarProperty Name="CreatedIP" ColumnName="CreatedIP" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="IsDeclarationAccepted" ColumnName="IsDeclarationAccepted" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="BusinessType" ColumnName="BusinessType" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_Login">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Login">
+        <MappingFragment StoreEntitySet="M_Login">
+          <ScalarProperty Name="Login_Ip" ColumnName="Login_Ip" />
+          <ScalarProperty Name="LogIn_On" ColumnName="LogIn_On" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Emailid" ColumnName="Emailid" />
+          <ScalarProperty Name="AutoCode" ColumnName="AutoCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_State">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_State">
+        <MappingFragment StoreEntitySet="M_State">
+          <ScalarProperty Name="IsActiveYN" ColumnName="IsActiveYN" />
+          <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="M_BusinessType">
+      <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_BusinessType">
+        <MappingFragment StoreEntitySet="M_BusinessType">
+          <ScalarProperty Name="IsActiveYN" ColumnName="IsActiveYN" />
+          <ScalarProperty Name="BusinessTypeName" ColumnName="BusinessTypeName" />
+          <ScalarProperty Name="BusinessTypeID" ColumnName="BusinessTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_insertSignup_Data" FunctionName="VSMS_AmeeShreeModel.Store.sp_insertSignup_Data" />
+  </EntityContainerMapping>
+</Mapping>

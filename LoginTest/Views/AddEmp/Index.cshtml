@@ -1,0 +1,68 @@
+﻿@model LoginTest.Models.AddEmpModel
+@{
+    ViewBag.Title = "Employee List";
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "AddEmp", FormMethod.Post, new { id = "DSAForm", role = "form", enctype = "multipart/form-data" }))
+{
+
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+        @*<div class="card-header with-border" style="border-color: black;">*@
+            <div class="float-end" style="margin-left:90%">
+                <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Create New</a>
+            </div>
+        @*</div>*@
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>From Date</label>
+                    @Html.EditorFor(model => model.FromDate, "{0:d}", new { htmlAttributes = new { @id = "fromDateId", @class = "datepicker form-control", @autocomplete = "off", @placeholder = "DD-MMM-YYYY" } })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>To Date</label>
+                    @Html.EditorFor(model => model.ToDate, "{0:d}", new { htmlAttributes = new { @id = "toDateId", @class = "datepicker form-control", @autocomplete = "off", @placeholder = "DD-MMM-YYYY" } })
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Application Status</label>
+
+                    <select name="AppicationStatus" id="AppicationStatus" class="form-control select2">
+                        <option value="All">All</option>
+                        <option value="Live">Live</option>
+                        <option value="Resigned">Resigned</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1" style="margin-top:24px">
+                <div class="form-group">
+                    <input type="button" class="btn btn-primary" id="btnshowId" value="Show" />
+                </div>
+            </div>
+            <div class="col-md-1" style="margin-top:24px">
+                <div class="form-group">
+                    <a href="@Url.Action("Index")" class="btn btn-warning">Clear</a>
+                </div>
+            </div>
+            <div class="col-md-1" style="margin-top:24px">
+                <div class="form-group">
+                    <a href="@Url.Action("ExportOutSourceStaffListExcel")" class="btn btn-warning">Export</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="width:100%">
+            <table class="table table-bordered table-hover dataTable dtr-inline" cellspacing="0" id="tbl_AddEmpList">
+                <tbody></tbody>
+            </table>
+        </div>
+}
+<script src="~/AllJs/AddEmp.js"></script>

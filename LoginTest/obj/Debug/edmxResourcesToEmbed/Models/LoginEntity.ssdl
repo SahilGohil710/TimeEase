@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VSMS_AmeeShreeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="M_ApplyLeave">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="F_UserID" Type="int" />
+    <Property Name="F_LeaveTypeID" Type="int" />
+    <Property Name="LeaveFrom" Type="date" />
+    <Property Name="LeaveTo" Type="date" />
+    <Property Name="LeaveFor" Type="char" MaxLength="2" />
+    <Property Name="Month" Type="int" />
+    <Property Name="Year" Type="int" />
+    <Property Name="LeaveAcceptedYN" Type="char" MaxLength="1" />
+    <Property Name="LeaveAcceptedOn" Type="datetime" />
+    <Property Name="LeaveAcceptedBy" Type="varchar" MaxLength="50" />
+    <Property Name="LeaveAcceptedIP" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedIP" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedIP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="M_Attendance">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="F_UserID" Type="int" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="InTime" Type="time" Precision="7" />
+    <Property Name="OutTime" Type="time" Precision="7" />
+    <Property Name="WorkHours" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="FirstHalf" Type="char" MaxLength="10" />
+    <Property Name="SecondHalf" Type="char" MaxLength="10" />
+    <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="InsertedIP" Type="varchar" MaxLength="30" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="M_LeaveType">
+    <Key>
+      <PropertyRef Name="LeaveID" />
+    </Key>
+    <Property Name="LeaveID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LeaveType" Type="varchar" MaxLength="50" />
+    <Property Name="Leave_Description" Type="varchar" MaxLength="100" />
+    <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedIP" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedIP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="M_Login">
+    <Key>
+      <PropertyRef Name="LoginId" />
+    </Key>
+    <Property Name="LoginId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmailId" Type="varchar" MaxLength="100" />
+    <Property Name="SessionId" Type="varchar" MaxLength="50" />
+    <Property Name="LoggedIn" Type="bit" />
+    <Property Name="LoginOn" Type="datetime" />
+    <Property Name="logOn_IP" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="M_Login_failed">
+    <Key>
+      <PropertyRef Name="AutoCode" />
+    </Key>
+    <Property Name="AutoCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login_IP" Type="varchar" MaxLength="30" />
+    <Property Name="LogOn" Type="datetime" />
+    <Property Name="LogOn_Status" Type="varchar" MaxLength="50" />
+    <Property Name="EmailID" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="M_Shift">
+    <Key>
+      <PropertyRef Name="ShiftID" />
+    </Key>
+    <Property Name="ShiftID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Start_Time" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="End_Time" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="LunchStart_Time" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="LunchEnd_Time" Type="decimal" Precision="5" Scale="2" />
+    <Property Name="InsertedBy" Type="varchar" MaxLength="50" />
+    <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="InsertedIP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="M_Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AorE" Type="char" MaxLength="1" />
+    <Property Name="FullName" Type="varchar" MaxLength="150" />
+    <Property Name="Email" Type="varchar" MaxLength="150" />
+    <Property Name="PhoneNo" Type="varchar" MaxLength="10" />
+    <Property Name="Emergency_PhoneNo" Type="varchar" MaxLength="10" />
+    <Property Name="Address_Line1" Type="varchar" MaxLength="150" />
+    <Property Name="Address_Line2" Type="varchar" MaxLength="150" />
+    <Property Name="DOB" Type="datetime" />
+    <Property Name="JobTitle" Type="varchar" MaxLength="100" />
+    <Property Name="JoinDate" Type="datetime" />
+    <Property Name="WorkLocation" Type="varchar" MaxLength="100" />
+    <Property Name="Password" Type="varchar(max)" />
+    <Property Name="isResignedYN" Type="char" MaxLength="1" />
+    <Property Name="ResetPasswordToken" Type="nvarchar" MaxLength="255" />
+    <Property Name="TokenExpiration" Type="datetime" />
+    <Property Name="InsertedOn" Type="datetime" />
+    <Property Name="InsertedIP" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" />
+    <Property Name="ModifiedIP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_M_ApplyLeave_M_LeaveType">
+    <End Role="M_LeaveType" Type="Self.M_LeaveType" Multiplicity="0..1" />
+    <End Role="M_ApplyLeave" Type="Self.M_ApplyLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_LeaveType">
+        <PropertyRef Name="LeaveID" />
+      </Principal>
+      <Dependent Role="M_ApplyLeave">
+        <PropertyRef Name="F_LeaveTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_ApplyLeave_M_Users">
+    <End Role="M_Users" Type="Self.M_Users" Multiplicity="0..1" />
+    <End Role="M_ApplyLeave" Type="Self.M_ApplyLeave" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="M_ApplyLeave">
+        <PropertyRef Name="F_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_M_Attendance_M_Users">
+    <End Role="M_Users" Type="Self.M_Users" Multiplicity="0..1" />
+    <End Role="M_Attendance" Type="Self.M_Attendance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="M_Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="M_Attendance">
+        <PropertyRef Name="F_UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_AddEmpGridData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FromDate" Type="varchar" Mode="In" />
+    <Parameter Name="ToDate" Type="varchar" Mode="In" />
+    <Parameter Name="ApplicationStatus" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_ApplyLeaveGridData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="UserID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_LeaveApprovalGridData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="VSMS_AmeeShreeModelStoreContainer">
+    <EntitySet Name="M_ApplyLeave" EntityType="Self.M_ApplyLeave" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Attendance" EntityType="Self.M_Attendance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_LeaveType" EntityType="Self.M_LeaveType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Login" EntityType="Self.M_Login" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Login_failed" EntityType="Self.M_Login_failed" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Shift" EntityType="Self.M_Shift" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="M_Users" EntityType="Self.M_Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_M_ApplyLeave_M_LeaveType" Association="Self.FK_M_ApplyLeave_M_LeaveType">
+      <End Role="M_LeaveType" EntitySet="M_LeaveType" />
+      <End Role="M_ApplyLeave" EntitySet="M_ApplyLeave" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_ApplyLeave_M_Users" Association="Self.FK_M_ApplyLeave_M_Users">
+      <End Role="M_Users" EntitySet="M_Users" />
+      <End Role="M_ApplyLeave" EntitySet="M_ApplyLeave" />
+    </AssociationSet>
+    <AssociationSet Name="FK_M_Attendance_M_Users" Association="Self.FK_M_Attendance_M_Users">
+      <End Role="M_Users" EntitySet="M_Users" />
+      <End Role="M_Attendance" EntitySet="M_Attendance" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

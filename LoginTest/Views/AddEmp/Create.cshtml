@@ -1,0 +1,238 @@
+﻿@model LoginTest.Models.AddEmpModel
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Create New Employee";
+    var validationErrors = TempData["ValidationErrors"] as string;
+}
+<style>
+    .checkbox-wrapper-8 .tgl {
+        display: none;
+    }
+
+        .checkbox-wrapper-8 .tgl,
+        .checkbox-wrapper-8 .tgl:after,
+        .checkbox-wrapper-8 .tgl:before,
+        .checkbox-wrapper-8 .tgl *,
+        .checkbox-wrapper-8 .tgl *:after,
+        .checkbox-wrapper-8 .tgl *:before,
+        .checkbox-wrapper-8 .tgl + .tgl-btn {
+            box-sizing: border-box;
+        }
+
+            .checkbox-wrapper-8 .tgl::-moz-selection,
+            .checkbox-wrapper-8 .tgl:after::-moz-selection,
+            .checkbox-wrapper-8 .tgl:before::-moz-selection,
+            .checkbox-wrapper-8 .tgl *::-moz-selection,
+            .checkbox-wrapper-8 .tgl *:after::-moz-selection,
+            .checkbox-wrapper-8 .tgl *:before::-moz-selection,
+            .checkbox-wrapper-8 .tgl + .tgl-btn::-moz-selection,
+            .checkbox-wrapper-8 .tgl::selection,
+            .checkbox-wrapper-8 .tgl:after::selection,
+            .checkbox-wrapper-8 .tgl:before::selection,
+            .checkbox-wrapper-8 .tgl *::selection,
+            .checkbox-wrapper-8 .tgl *:after::selection,
+            .checkbox-wrapper-8 .tgl *:before::selection,
+            .checkbox-wrapper-8 .tgl + .tgl-btn::selection {
+                background: none;
+            }
+
+            .checkbox-wrapper-8 .tgl + .tgl-btn {
+                outline: 0;
+                /*display: block;*/
+                width: 4em;
+                height: 2em;
+                position: relative;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+                .checkbox-wrapper-8 .tgl + .tgl-btn:after,
+                .checkbox-wrapper-8 .tgl + .tgl-btn:before {
+                    position: relative;
+                    display: block;
+                    content: "";
+                    width: 50%;
+                    height: 100%;
+                }
+
+                .checkbox-wrapper-8 .tgl + .tgl-btn:after {
+                    left: 0;
+                }
+
+                .checkbox-wrapper-8 .tgl + .tgl-btn:before {
+                    display: none;
+                }
+
+            .checkbox-wrapper-8 .tgl:checked + .tgl-btn:after {
+                left: 50%;
+            }
+
+    .checkbox-wrapper-8 .tgl-skewed + .tgl-btn {
+        overflow: hidden;
+        transform: skew(-10deg);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transition: all 0.2s ease;
+        font-family: sans-serif;
+        background: #888;
+    }
+
+        .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after,
+        .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:before {
+            transform: skew(10deg);
+            display: inline-block;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: center;
+            position: absolute;
+            line-height: 2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after {
+            left: 100%;
+            content: attr(data-tg-on);
+        }
+
+        .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:before {
+            left: 0;
+            content: attr(data-tg-off);
+        }
+
+        .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:active {
+            background: #888;
+        }
+
+            .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:active:before {
+                left: -10%;
+            }
+
+    .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn {
+        background: #86d993;
+    }
+
+        .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:before {
+            left: -100%;
+        }
+
+        .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:after {
+            left: 0;
+        }
+
+        .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:active:after {
+            left: 10%;
+        }
+
+    /*.toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }*/
+</style>
+<link href="~/Content/Layout.css" rel="stylesheet" />
+<link href="~/Content/AdminLTE/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+@using (Html.BeginForm("Create", "AddEmp", FormMethod.Post, new { id = "CreateEmp", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="validationErrors" value='@Html.Raw(JsonConvert.SerializeObject(ViewBag.ValidationErrors ?? new List<string>()))' />
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+
+    <div id="errorContainer" class="alert alert-danger" style="display: none;">
+        <ul id="errorList"></ul>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullName, "Full Name", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "custom-input", @maxlength = "100", @tabindex = "1" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNo, "Phone No", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "custom-input", @maxlength = "10", @id = "PhoneNo", @onkeypress = "return isNumeric(event)", @oninput = "validatePhoneLength(this)", @tabindex = "3" } })
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, "Email-ID", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "custom-input", @maxlength = "100", @id = "Email", @type = "email", @placeholder = "Enter your email", @tabindex = "2" } })
+        </div>
+        <div class="form-group" style="margin-left:30px">
+            @Html.LabelFor(model => model.DOB, "DOB", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.DOB, "{0:d}", new { htmlAttributes = new { @id = "dobID", @class = "datepicker custom-input", @autocomplete = "off", @placeholder = "DD-MMM-YYYY", @readonly = "readonly", @tabindex = "4" } })
+            <span id="dobError" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+        <div class="form-group" style="margin-right:30px">
+            @Html.LabelFor(model => model.AddressLine1, "Address Line 1", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "custom-input", @maxlength = "150", @tabindex = "5" } })
+        </div>
+        <div class="form-group" style="margin-right:70px">
+            @Html.LabelFor(model => model.EmergencyPhoneNo, "Emergency Phone No", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.EmergencyPhoneNo, new { htmlAttributes = new { @class = "custom-input", @maxlength = "10", @id = "PhoneNo", @onkeypress = "return isNumeric(event)", @oninput = "validatePhoneLength(this)", @tabindex = "7" } })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group" style="margin-right:30px">
+            @Html.LabelFor(model => model.AddressLine2, "Address Line 2", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "custom-input", @maxlength = "150", @tabindex = "6" } })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.JobTitle, "Job Title", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "custom-input", @maxlength = "100", @id = "JobTitle", @oninput = "validateJobTitle(this)", @tabindex = "8" } })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group" style="margin-right:30px">
+            @Html.LabelFor(model => model.WorkLocation, "Work Location", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.WorkLocation, new { htmlAttributes = new { @class = "custom-input", @maxlength = "100", @tabindex = "9" } })
+        </div>
+    </div>
+    @*</div>*@
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.JoinDate, "Join Date", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.JoinDate, "{0:d}", new { htmlAttributes = new { @id = "joinDateID", @class = "datepicker custom-input", @autocomplete = "off", @placeholder = "DD-MMM-YYYY", @readonly = "readonly", @tabindex = "10" } })
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Password, "Password", htmlAttributes: new { @class = "control-label req" })
+                <div style="position: relative;">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "custom-input password-field", @maxlength = "30", @id = "password" } })
+                    <span class="input-group-append">
+                        <button type="button" class="toggle-password" id="toggle-password" aria-label="Show Password">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>*@
+    </div>
+    @*<div class="card-footer">*@
+        <div class="checkbox-wrapper-8" style="align-items:center;">
+            <input type="hidden" id="AorEHidden" name="AorE" value="E" />
+            <input type="checkbox" id="cb3-8" class="tgl tgl-skewed" onchange="updateAorE()" />
+            <label for="cb3-8" data-tg-on="Admin" data-tg-off="Emp" class="tgl-btn"></label>
+        </div>
+        <input type="submit" id="btnSubmit" value="Submit" class="btn btn-success" />
+        <a href="@Url.Action("Index")" class="btn btn-info float-end"><i class="fa fa-arrow-circle-o-left"></i> Back to List</a>
+    @*</div>*@
+}
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*@
+<script src="~/Content/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/AllJs/AddEmp.js"></script>

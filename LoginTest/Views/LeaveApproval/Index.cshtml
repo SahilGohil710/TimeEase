@@ -1,0 +1,23 @@
+﻿@model LoginTest.Models.LeaveApprovalModel
+
+@{
+    ViewBag.Title = "Leave Approval List";
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+
+@using (Html.BeginForm("Index", "LeaveApproval", FormMethod.Post, new { id = "id_LeaveApproval", role = "form", enctype = "multipart/form-data" }))
+{
+
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+    <div class="row">
+        <div style="width:100%">
+            <table class="table table-bordered table-hover dataTable dtr-inline" cellspacing="0" id="tbl_LeaveDetails">
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+}
+<script src="~/AllJs/LeaveApproval.js"></script>

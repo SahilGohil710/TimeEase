@@ -1,0 +1,65 @@
+CREATE PROCEDURE sp_insertSignup_Data      
+    @CompanyName VARCHAR(100),      
+    @ResigteredAddr VARCHAR(200),      
+    @BusinessAddr VARCHAR(100),      
+    @State VARCHAR(200),      
+    @PinCode VARCHAR(20),      
+    @PhoneNo VARCHAR(20),      
+    @Website VARCHAR(100),      
+    @CompanyEmail VARCHAR(100),      
+    @Natureof_BusinessActivity VARCHAR(200),      
+    @InCorp_CertyNo VARCHAR(50),      
+    @GSTIN VARCHAR(20),      
+    @PAN VARCHAR(10),      
+    @MSME_No VARCHAR(100),      
+    @Natureof_Org VARCHAR(100),      
+    @BankName VARCHAR(100),      
+    @Nameof_Acc VARCHAR(100),      
+    @Addrof_Bank VARCHAR(200),      
+    @AccNo VARCHAR(50),      
+    @IFSC VARCHAR(20),      
+    @Branch VARCHAR(100),      
+    @SwiftCode VARCHAR(20),      
+    @Typeof_Acc VARCHAR(100),      
+    @MICR_Code VARCHAR(20),      
+    @CreatedOn DATETIME,      
+    @CreatedIP VARCHAR(30)      
+AS      
+BEGIN      
+  
+  DECLARE @NewPrimaryKeyTable TABLE (NewPrimaryKey INT);  
+       
+    INSERT INTO [dbo].[M_Users]      
+           ([CompanyName]      
+           ,[RegisteredAddress]      
+           ,[BusinessAddress]      
+           ,[State]      
+           ,[PinCode]      
+           ,[PhoneNo]      
+           ,[Website]      
+           ,[CompanyEmail]      
+           ,[Natureof_BusinessActivity]      
+           ,[Incorp_Certy_No]      
+           ,[GSTIN]      
+           ,[PAN]      
+           ,[MSME_No]      
+           ,[Natureof_Organization]      
+           ,[BankName]      
+           ,[Nameof_Acc]      
+           ,[Addressof_Bank]      
+           ,[AccNo]      
+           ,[IFSC]      
+           ,[Branch]      
+           ,[SwiftCode]      
+           ,[Typeof_Acc]      
+           ,[MICR_Code]      
+           ,[CreatedOn]      
+           ,[CreatedIP])      
+      OUTPUT INSERTED.CompanyID INTO @NewPrimaryKeyTable (NewPrimaryKey)     VALUES     
+           (@CompanyName, @ResigteredAddr, @BusinessAddr, @State, @PinCode,      
+            @PhoneNo, @Website, @CompanyEmail, @Natureof_BusinessActivity,       
+            @InCorp_CertyNo, @GSTIN, @PAN, @MSME_No, @Natureof_Org, @BankName,      
+            @Nameof_Acc, @Addrof_Bank, @AccNo, @IFSC, @Branch, @SwiftCode,       
+            @Typeof_Acc, @MICR_Code, @CreatedOn, @CreatedIP);      
+      
+  SELECT NewPrimaryKey FROM @NewPrimaryKeyTable;  END;
