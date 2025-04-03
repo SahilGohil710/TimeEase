@@ -1,18 +1,72 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Dashboard | TimeEase";
 }
 
-<section class="parallax" id="home">
-    <h1>Welcome to Our Diamond World</h1>
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to TimeEase ⏳</h1>
+        <p>Effortless Attendance & Leave Management at Your Fingertips.</p>
+    </div>
 </section>
-<section class="content" id="about">
-    <h2>About Us</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+<section class="features">
+    <div class="feature">
+        <h2>👨‍💼 Admin Panel</h2>
+        <p>Manage employees, approve leaves, and oversee attendance with ease.</p>
+    </div>
+    <div class="feature">
+        <h2>📅 Employee Dashboard</h2>
+        <p>Check your attendance, apply for leaves, and stay updated.</p>
+    </div>
+    <div class="feature">
+        <h2>📧 Automated Notifications</h2>
+        <p>Receive email alerts for leave approvals, rejections, and password resets.</p>
+    </div>
 </section>
-<section class="parallax" id="diamonds">
-    <h1>Explore Our Diamonds</h1>
+
+<section class="cta-section">
+    <h2>Let's Get Started 🚀</h2>
+    <p>Use the navigation menu to explore your dashboard.</p>
 </section>
-<section class="content" id="contact">
-    <h2>Contact Us</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-</section>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    .hero-section {
+        background: url('/images/banner.jpg') no-repeat center center/cover;
+        padding: 80px 20px;
+        color: black;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .features {
+        display: flex;
+        justify-content: space-around;
+        padding: 40px 20px;
+    }
+
+    .feature {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 30%;
+    }
+
+    .cta-section {
+        background-color: #007bff;
+        color: white;
+        padding: 20px;
+        margin-top: 20px;
+    }
+</style>

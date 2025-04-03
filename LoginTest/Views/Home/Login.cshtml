@@ -1,7 +1,7 @@
 ﻿@model LoginTest.Models.LoginModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "TimeEase";
     Layout = null;
 }
 
@@ -145,7 +145,7 @@
                     alertify.error(@Html.Raw(Json.Encode(TempData["validationMessage_forLogin"])));
                 </script>
             }
-
+            <h1 style="text-align:center; font-style: italic;">Welcome to TimeEase</h1>
             <div class="wave-group">
                 <input required class="input" type="email" name="Email" id="email" maxlength="100" />
                 <span class="bar"></span>
@@ -182,7 +182,7 @@
             </span>
             <input class="login-button" type="submit" value="Sign In">
         </form>
-        <div class="social-account-container">
+        @*<div class="social-account-container">
             <span class="title">Or</span>
             <div class="cntainer mt-4">
                 <a href="@Url.Action("SignUp", "Home")" class="button type--C">
@@ -193,7 +193,7 @@
                     <div class="button__drow2"></div>
                 </a>
             </div>
-        </div>
+        </div>*@
         @*<span class="agreement"><a href="#">Learn user licence agreement</a></span>*@
     </div>
     @Scripts.Render("~/bundles/jqueryval")
