@@ -251,7 +251,8 @@ namespace LoginTest.Controllers
                     AorE = isSuccessLogin.AorE,
                     FullName = isSuccessLogin.FullName,
                     SessionId = sessionId,
-                    EmailID = isSuccessLogin.Email
+                    EmailID = isSuccessLogin.Email,
+                    UserID = isSuccessLogin.UserID
                 };
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
@@ -283,7 +284,7 @@ namespace LoginTest.Controllers
                 Response.Cookies.Add(authCookie);
 
                 // Set the custom principal to the current context
-                var customIdentity = new CustomIdentity(ticket, user.FullName, user.SessionId, user.AorE, user.EmailID);
+                var customIdentity = new CustomIdentity(ticket, user.FullName, user.SessionId, user.AorE, user.EmailID, user.UserID);
                 var customPrincipal = new CustomPrincipal(customIdentity);
                 HttpContext.User = customPrincipal; // Ensure the custom principal is set correctly
 

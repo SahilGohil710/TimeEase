@@ -88,6 +88,14 @@
     <Property Name="ModifiedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="M_Attendance" Relationship="VSMS_AmeeShreeModel.FK_M_Attendance_M_Users" FromRole="M_Users" ToRole="M_Attendance" />
     <NavigationProperty Name="M_ApplyLeave" Relationship="VSMS_AmeeShreeModel.FK_M_ApplyLeave_M_Users" FromRole="M_Users" ToRole="M_ApplyLeave" />
+    <Property Name="Salary" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Salary_InsertedOn" Type="DateTime" Precision="3" />
+    <Property Name="Salary_InsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Salary_InsertedIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Salary_ModifiedOn" Type="DateTime" Precision="3" />
+    <Property Name="Salary_ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Salary_Modified_IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Salary_IncBy" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <ComplexType Name="sp_AddEmpGridData_Result">
     <Property Type="String" Name="AorE" Nullable="true" MaxLength="8" />

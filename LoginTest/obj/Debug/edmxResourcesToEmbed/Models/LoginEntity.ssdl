@@ -111,6 +111,14 @@
     <Property Name="InsertedIP" Type="varchar" MaxLength="50" />
     <Property Name="ModifiedOn" Type="datetime" />
     <Property Name="ModifiedIP" Type="varchar" MaxLength="50" />
+    <Property Name="Salary" Type="varchar" MaxLength="8" />
+    <Property Name="Salary_IncBy" Type="varchar" MaxLength="5" />
+    <Property Name="Salary_InsertedOn" Type="datetime" />
+    <Property Name="Salary_InsertedBy" Type="varchar" MaxLength="50" />
+    <Property Name="Salary_InsertedIP" Type="varchar" MaxLength="50" />
+    <Property Name="Salary_ModifiedOn" Type="datetime" />
+    <Property Name="Salary_ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="Salary_Modified_IP" Type="varchar" MaxLength="50" />
   </EntityType>
   <Association Name="FK_M_ApplyLeave_M_LeaveType">
     <End Role="M_LeaveType" Type="Self.M_LeaveType" Multiplicity="0..1" />

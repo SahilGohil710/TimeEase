@@ -1,0 +1,254 @@
+﻿@model LoginTest.Models.SalaryModel
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "Add Employee Salary";
+    var validationErrors = TempData["ValidationErrors"] as string;
+}
+
+<link href="~/Content/Layout.css" rel="stylesheet" />
+<link href="~/Content/AdminLTE/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<script src="~/Content/JS/jquery-3.6.0.min.js"></script>
+<script src="~/Content/AdminLTE/plugins/select2/js/select2.min.js"></script>
+
+<style>
+    /* Remove default Select2 border and background */
+    .select2-container--default .select2-selection--single {
+        background-color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 20px;
+        margin-top: 15px;
+        box-shadow: #cff0ff 0px 10px 10px -5px;
+        border-inline: 2px solid transparent;
+        height: auto;
+    }
+
+    /* Remove the height constraint */
+    .select2-selection__rendered {
+        line-height: normal !important;
+        padding: 0;
+    }
+
+    /* Remove default arrow styles */
+    .select2-selection__arrow {
+        height: 100%;
+        top: 100%;
+        transform: translateY(-50%);
+        right: 10px;
+    }
+
+    /* Optional: Match font and styling */
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-size: 16px;
+        color: #333;
+        padding-left: 5px;
+    }
+</style>
+
+@using (Html.BeginForm("Salary", "AddEmp", FormMethod.Post, new { id = "SalaryForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <input type="hidden" id="validationErrors" value='@Html.Raw(JsonConvert.SerializeObject(ViewBag.ValidationErrors ?? new List<string>()))' />
+    <div class="container">
+        <h3>@ViewBag.Title</h3>
+    </div>
+
+    <div id="errorContainer" class="alert alert-danger" style="display: none;">
+        <ul id="errorList"></ul>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label req">Select Employee:</label>
+            @Html.DropDownListFor(m => m.UserName, ViewBag.UserName as List<SelectListItem>, "Select Employee", new { @class = "custom-input select2" })
+        </div>
+        <div class="form-group" style="margin-left:10%">
+            @Html.LabelFor(model => model.Salary, "Salary:", htmlAttributes: new { @class = "control-label req" })
+            @Html.EditorFor(model => model.Salary, new { htmlAttributes = new { @class = "custom-input", @id = "Salary", @maxlength = "8", @tabindex = "2" } })
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group" style="margin-left:10%">
+            <label>Salary in Words:</label>
+            @*<input type="text" id="SalaryInWords" class="custom-input" readonly />*@
+            <input type="text" id="SalaryInWords" class="custom-input" readonly title="" />
+        </div>
+        <div class="form-group" style="margin-right:40%; display: none;">
+            <label>
+                @Html.CheckBoxFor(model => model.Increment_ByPerc, new { @id = "IncrementCheckbox" })
+                @Html.LabelFor(model => model.Increment_ByPerc, "Increment by %")
+                @Html.ValidationMessageFor(model => model.Increment_ByPerc, "", new { @class = "text-danger" })
+            </label>
+        </div>
+        <div class="form-group" id="IncrementSection" style="display:none; margin-left:10%">
+            @Html.LabelFor(model => model.IncrementPercent, "Enter % to increment:", new { @class = "control-label" })
+            @Html.EditorFor(model => model.IncrementPercent, new
+       {
+           htmlAttributes = new
+           {
+               @class = "custom-input",
+               @type = "number",
+               @min = "0",
+               @max = "100",
+               @placeholder = "e.g., 10",
+               @id = "IncrementPercent"
+           }
+       })
+            @Html.ValidationMessageFor(model => model.IncrementPercent, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-md-10" style="margin-left:10%">
+        <div class="form-group">
+            <input type="submit" id="btnSubmit" value="Submit" class="btn btn-success" />
+            <a href="@Url.Action("Index")" class="btn btn-info float-end"><i class="fa fa-arrow-circle-o-left"></i> Back to List</a>
+        </div>
+    </div>
+}
+<script>
+    let originalSalary = 0;
+    let debounceTimer;
+    let salaryInputTimer;
+
+    $('#Salary').on('input', function () {
+        clearTimeout(salaryInputTimer);
+
+        salaryInputTimer = setTimeout(() => {
+            let rawSalary = $(this).val().replace(/,/g, '').replace(/\D/g, '');
+            const formatted = Number(rawSalary).toLocaleString('en-IN');
+            $(this).val(formatted);
+
+            if (rawSalary) {
+                originalSalary = parseFloat(rawSalary); // 👈 Update originalSalary dynamically!
+                //$('#SalaryInWords').val(convertNumberToWords(rawSalary));
+                $('#SalaryInWords').val(convertNumberToWords(rawSalary)).attr('title', convertNumberToWords(rawSalary));
+            } else {
+                $('#SalaryInWords').val('').attr('title', '');
+                originalSalary = 0; // 👈 Reset if cleared
+            }
+        }, 300);
+    });
+
+
+    function convertNumberToWords(amount) {
+        const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+            'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen',
+            'Seventeen', 'Eighteen', 'Nineteen'];
+        const b = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+
+        amount = amount.toString().replace(/,/g, '');
+        amount = parseInt(amount);
+        if (isNaN(amount) || amount === 0) return "Zero Rupees Only";
+        if (amount.toString().length > 9) return 'Overflow';
+
+        let numStr = ('000000000' + amount).substr(-9).match(/.{1,2}/g);
+        let [crore, lakh, thousand, hundred, rest] = [
+            parseInt(numStr[0]), parseInt(numStr[1]), parseInt(numStr[2]),
+            parseInt(numStr[3][0]), parseInt(numStr[3][1] + numStr[4])
+        ];
+
+        let str = '';
+        if (crore) str += (crore < 20 ? a[crore] : b[Math.floor(crore / 10)] + ' ' + a[crore % 10]) + ' Crore ';
+        if (lakh) str += (lakh < 20 ? a[lakh] : b[Math.floor(lakh / 10)] + ' ' + a[lakh % 10]) + ' Lakh ';
+        if (thousand) str += (thousand < 20 ? a[thousand] : b[Math.floor(thousand / 10)] + ' ' + a[thousand % 10]) + ' Thousand ';
+        if (hundred) str += a[hundred] + ' Hundred ';
+        if (rest) str += (str !== '' ? 'and ' : '') + (rest < 20 ? a[rest] : b[Math.floor(rest / 10)] + ' ' + a[rest % 10]) + ' ';
+
+        return str.trim() + ' Rupees Only';
+    }
+
+    $(document).ready(function () {
+        var errors = $("#validationErrors").val();
+
+        try {
+            errors = JSON.parse(errors);
+        } catch (e) {
+            errors = [];
+            console.error("JSON Parsing Error:", e);
+        }
+
+        if (errors.length > 0) {
+            var errorList = "";
+            $.each(errors, function (index, value) {
+                errorList += "<li>" + value + "</li>";
+            });
+
+            $("#errorList").html(errorList);
+            $("#errorContainer").show();
+        }
+
+        $('.select2').select2({
+            placeholder: "Select Employee",
+            allowClear: true,
+            minimumResultsForSearch: 0
+        });
+
+        $('.select2').on('change', function () {
+            const userId = $(this).val();
+
+            if (userId) {
+                $.ajax({
+                    url: '../AddEmp/GetSalaryByUserId',
+                    type: 'GET',
+                    data: { userId: userId },
+                    success: function (response) {
+                        if (response.success) {
+                            originalSalary = parseFloat(response.salary.replace(/,/g, ''));
+                            const formatted = originalSalary.toLocaleString('en-IN');
+                            $('#Salary').val(formatted);
+                            $('#SalaryInWords').val(convertNumberToWords(originalSalary));
+
+                            $('#IncrementCheckbox').closest('.form-group').show(); // show checkbox
+                        } else {
+                            originalSalary = 0;
+                            $('#Salary').val('');
+                            $('#SalaryInWords').val('');
+                            $('#IncrementCheckbox').prop('checked', false);
+                            $('#IncrementCheckbox').closest('.form-group').hide();
+                            $('#IncrementSection').hide();
+                            alertify.error(response.message || "Salary not available.");
+                        }
+                    },
+                    error: function () {
+                        alertify.error("Something went wrong while retrieving salary.");
+                    }
+                });
+            } else {
+                originalSalary = 0;
+                $('#Salary').val('');
+                $('#SalaryInWords').val('');
+                $('#IncrementCheckbox').prop('checked', false);
+                $('#IncrementCheckbox').closest('.form-group').hide();
+                $('#IncrementSection').hide();
+            }
+        });
+
+        $('#IncrementCheckbox').on('change', function () {
+            if ($(this).is(':checked') && originalSalary > 0) {
+                $('#IncrementSection').slideDown();
+            } else {
+                $('#IncrementSection').slideUp();
+                $('#IncrementPercent').val('');
+                $('#Salary').val(originalSalary.toLocaleString('en-IN'));
+                $('#SalaryInWords').val(convertNumberToWords(originalSalary));
+            }
+        });
+
+        $('#IncrementPercent').on('input', function () {
+            clearTimeout(debounceTimer);
+
+            debounceTimer = setTimeout(() => {
+                let percent = parseFloat($(this).val());
+
+                if (!isNaN(percent) && originalSalary > 0) {
+                    const incrementedSalary = Math.round(originalSalary + (originalSalary * percent / 100));
+                    $('#Salary').val(incrementedSalary.toLocaleString('en-IN'));
+                    //$('#SalaryInWords').val(convertNumberToWords(incrementedSalary));
+                    $('#SalaryInWords').val(convertNumberToWords(incrementedSalary)).attr('title', convertNumberToWords(incrementedSalary));
+                } else {
+                    $('#Salary').val(originalSalary.toLocaleString('en-IN'));
+                    $('#SalaryInWords').val(convertNumberToWords(originalSalary));
+                }
+            }, 400); // wait until user pauses for 400ms
+        });
+    });
+</script>

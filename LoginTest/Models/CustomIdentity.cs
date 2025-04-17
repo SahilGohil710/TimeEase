@@ -14,14 +14,16 @@ namespace LoginTest.Models
         public string EmailID { get; set; }
         public string SessionId { get; set; }
         public string AorE { get; set; }
+        public int UserID { get; set; }
 
-        public CustomIdentity(FormsAuthenticationTicket ticket, string fullName, string sessionId, string AorE, string EmailID)
+        public CustomIdentity(FormsAuthenticationTicket ticket, string fullName, string sessionId, string AorE, string EmailID, int UserID)
         {
             this.Name = ticket.Name;
             this.FullName = fullName;
             this.EmailID = EmailID;
             this.SessionId = sessionId;
             this.AorE = AorE;
+            this.UserID = UserID;
         }
 
         public string AuthenticationType => "Forms";

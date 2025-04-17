@@ -77,7 +77,7 @@ namespace LoginTest.Controllers
         public ActionResult Index()
         {
             string email = ViewBag.Logged_Email; string fullName = ViewBag.Logged_FullName; string sessionid = ViewBag.Logged_SessionId;
-            string AorE = ViewBag.Logged_AorE;
+            string AorE = ViewBag.Logged_AorE; int userID = ViewBag.Logged_UserID;
 
             var LoginAuth = _repository.M_Login.Where(m => m.SessionId.Trim() == sessionid.Trim() && m.EmailId.ToUpper().Trim() == email.ToUpper().Trim() && m.LoggedIn == false).FirstOrDefault();
             if (LoginAuth != null)
@@ -542,7 +542,7 @@ namespace LoginTest.Controllers
             }
         }
         #endregion
-        
+
         #region EDIT
         public ActionResult Edit(string Email)
         {
@@ -680,6 +680,148 @@ namespace LoginTest.Controllers
                 return View("Create"); // Ensure you return the view
             }
         }
+        #endregion
+
+        #region Salary
+        public ActionResult Salary()
+        {
+            string email = ViewBag.Logged_Email; string fullName = ViewBag.Logged_FullName; string sessionid = ViewBag.Logged_SessionId;
+            string AorE = ViewBag.Logged_AorE; int userID = ViewBag.Logged_UserID;
+
+            var LoginAuth = _repository.M_Login.Where(m => m.SessionId.Trim() == sessionid.Trim() && m.EmailId.ToUpper().Trim() == email.ToUpper().Trim() && m.LoggedIn == false).FirstOrDefault();
+            if (LoginAuth != null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            ViewBag.UserName = _repository.M_Users.Where(x => x.isResignedYN == "N")
+                               .Select(lt => new SelectListItem
+                               {
+                                   Text = lt.FullName,
+                                   Value = lt.UserID.ToString()
+                               }).ToList();
+
+            return View();
+        }
+        [HttpGet]
+        public JsonResult GetSalaryByUserId(int userId)
+        {
+            var user = _repository.M_Users.FirstOrDefault(u => u.UserID == userId);
+
+            if (user != null)
+            {
+                if (user.Salary == null)
+                {
+                    return Json(new { success = false, message = "No salary found for this employee. Please add salary." }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { success = true, salary = user.Salary.Replace(",", "") }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { success = false, message = "Employee not found." }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult Salary(SalaryModel model)
+        {
+            // Retrieve session details
+            string email = ViewBag.Logged_Email;
+            string fullName = ViewBag.Logged_FullName;
+            string sessionId = ViewBag.Logged_SessionId;
+            string AorE = ViewBag.Logged_AorE;
+            int userID = ViewBag.Logged_UserID;
+
+            // Check login session validity
+            var loginAuth = _repository.M_Login.FirstOrDefault(m =>
+                m.SessionId.Trim() == sessionId.Trim() &&
+                m.EmailId.Trim().ToUpper() == email.Trim().ToUpper() &&
+                m.LoggedIn == false);
+
+            if (loginAuth != null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            // --- VALIDATION ---
+            if (string.IsNullOrWhiteSpace(model.UserName))
+                ModelState.AddModelError("UserName", "Please select an employee.");
+
+            if (string.IsNullOrWhiteSpace(model.Salary))
+                ModelState.AddModelError("Salary", "Please enter the salary amount.");
+
+            if (model.Salary == "0")
+                ModelState.AddModelError("Salary", "Salary cannot be 0.");
+
+            if (model.Increment_ByPerc && !model.IncrementPercent.HasValue)
+                ModelState.AddModelError("IncrementPercent", "Please enter the percentage to increment.");
+
+            // --- ON VALID ---
+            if (ModelState.IsValid)
+            {
+                int selectedUserId;
+                if (!int.TryParse(model.UserName, out selectedUserId))
+                {
+                    ModelState.AddModelError("UserName", "Invalid employee selected.");
+                }
+                else
+                {
+                    var user = _repository.M_Users.FirstOrDefault(x => x.UserID == selectedUserId);
+
+                    if (user != null)
+                    {
+                        string cleanSalary = model.Salary.Replace(",", "").Trim();
+                        user.Salary = cleanSalary;
+
+                        DateTime now = DateTime.Now;
+                        string ip = GetIp();
+
+                        if (model.Increment_ByPerc)
+                        {
+                            user.Salary_IncBy = model.IncrementPercent.ToString();
+                            user.Salary_ModifiedBy = userID.ToString();
+                            user.Salary_ModifiedOn = now;
+                            user.Salary_Modified_IP = ip;
+                        }
+                        else if (user.Salary != cleanSalary)
+                        {
+                            user.Salary_ModifiedBy = userID.ToString();
+                            user.Salary_ModifiedOn = now;
+                            user.Salary_Modified_IP = ip;
+                        }
+                        else
+                        {
+                            user.Salary_InsertedBy = userID.ToString();
+                            user.Salary_InsertedOn = now;
+                            user.Salary_InsertedIP = ip;
+                        }
+
+                        _repository.SaveChanges();
+
+                        TempData["IsFailureMessage"] = false;
+                        TempData["Message"] = "Salary added successfully.";
+                        return RedirectToAction("Index");
+                    }
+
+                    ModelState.AddModelError("", "Selected employee not found.");
+                }
+            }
+
+            // --- ON INVALID ---
+            ViewBag.UserName = _repository.M_Users
+                .Where(x => x.isResignedYN == "N")
+                .Select(lt => new SelectListItem
+                {
+                    Text = lt.FullName,
+                    Value = lt.UserID.ToString()
+                }).ToList();
+
+            ViewBag.ValidationErrors = ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .ToList();
+
+            return View("Salary");
+        }
+
         #endregion
     }
 }

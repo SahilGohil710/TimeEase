@@ -27,6 +27,14 @@
     <EntitySetMapping Name="M_Users">
       <EntityTypeMapping TypeName="VSMS_AmeeShreeModel.M_Users">
         <MappingFragment StoreEntitySet="M_Users">
+          <ScalarProperty Name="Salary_IncBy" ColumnName="Salary_IncBy" />
+          <ScalarProperty Name="Salary_Modified_IP" ColumnName="Salary_Modified_IP" />
+          <ScalarProperty Name="Salary_ModifiedBy" ColumnName="Salary_ModifiedBy" />
+          <ScalarProperty Name="Salary_ModifiedOn" ColumnName="Salary_ModifiedOn" />
+          <ScalarProperty Name="Salary_InsertedIP" ColumnName="Salary_InsertedIP" />
+          <ScalarProperty Name="Salary_InsertedBy" ColumnName="Salary_InsertedBy" />
+          <ScalarProperty Name="Salary_InsertedOn" ColumnName="Salary_InsertedOn" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
           <ScalarProperty Name="ModifiedIP" ColumnName="ModifiedIP" />
           <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
           <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />

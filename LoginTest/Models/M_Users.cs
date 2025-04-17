@@ -41,6 +41,14 @@ namespace LoginTest.Models
         public string WorkLocation { get; set; }
         public Nullable<System.DateTime> ModifiedOn { get; set; }
         public string ModifiedIP { get; set; }
+        public string Salary { get; set; }
+        public Nullable<System.DateTime> Salary_InsertedOn { get; set; }
+        public string Salary_InsertedBy { get; set; }
+        public string Salary_InsertedIP { get; set; }
+        public Nullable<System.DateTime> Salary_ModifiedOn { get; set; }
+        public string Salary_ModifiedBy { get; set; }
+        public string Salary_Modified_IP { get; set; }
+        public string Salary_IncBy { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<M_Attendance> M_Attendance { get; set; }

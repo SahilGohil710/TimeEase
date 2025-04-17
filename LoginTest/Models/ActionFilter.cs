@@ -25,7 +25,7 @@ namespace LoginTest.Models
                     var user = js.Deserialize<dynamic>(ticket.UserData);
 
                     // Create a custom identity and principal
-                    var customIdentity = new CustomIdentity(ticket, user["FullName"], user["SessionId"], user["AorE"], user["EmailID"]);
+                    var customIdentity = new CustomIdentity(ticket, user["FullName"], user["SessionId"], user["AorE"], user["EmailID"], user["UserID"]);
                     var customPrincipal = new CustomPrincipal(customIdentity);
 
                     // Set the custom principal
@@ -36,6 +36,7 @@ namespace LoginTest.Models
                     filterContext.Controller.ViewBag.Logged_FullName = user["FullName"];
                     filterContext.Controller.ViewBag.Logged_SessionId = user["SessionId"];
                     filterContext.Controller.ViewBag.Logged_AorE = user["AorE"];
+                    filterContext.Controller.ViewBag.Logged_UserID = user["UserID"];
                 }
             }
 
