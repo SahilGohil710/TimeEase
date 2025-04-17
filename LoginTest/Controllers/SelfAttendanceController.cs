@@ -55,6 +55,7 @@ namespace LoginTest.Controllers
             List<SelfAttendanceModel> fullMonthData = new List<SelfAttendanceModel>();
 
             int userID = _repository.M_Users.Where(x => x.Email.ToUpper().Trim() == loggedInEmail.ToUpper().Trim()).Select(x => x.UserID).FirstOrDefault();
+            string empSalary = _repository.M_Users.Where(x => x.Email.ToUpper().Trim() == loggedInEmail.ToUpper().Trim()).Select(x => x.Salary).FirstOrDefault();
 
             // Create a connection to fetch attendance records
             var attendanceRecords = _repository.M_Attendance
@@ -126,10 +127,25 @@ namespace LoginTest.Controllers
                                     (d.FirstHalf?.ToUpper().Trim() == "LWP" || d.SecondHalf?.ToUpper().Trim() == "LWP") ? 0.5 : 0
                                 );
                 salaryFor = payableDays - (nonPayableDays + lwpDays);
+
+                // Convert salary to double (handle nulls or invalid format)
+                double salary = 0;
+                double.TryParse(empSalary, out salary);
+
+                // Avoid division by zero
+                double salaryPerDay = totalDays > 0 ? (salary / totalDays) : 0;
+
+                // Salary to get this month
+                double salaryToGet = salaryPerDay * salaryFor;
+
+                // Pass to ViewBag
+                ViewBag.SalaryPerDay = salaryPerDay.ToString("0.00");
+                ViewBag.SalaryToGet = salaryToGet.ToString("0.00");
+
             }
 
             // Summary calculations
-           
+
 
             //int weeklyOff = fullMonthData.Count(d => d.Date.DayOfWeek == DayOfWeek.Saturday || d.Date.DayOfWeek == DayOfWeek.Sunday);
             //int weeklyOff = fullMonthData.Count(d => d.FirstHalf?.ToUpper().Trim() == "WO" && d.SecondHalf?.ToUpper().Trim() == "WO");

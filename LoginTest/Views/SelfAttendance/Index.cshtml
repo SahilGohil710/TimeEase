@@ -152,7 +152,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <h4>Attendance Summary</h4>
+        <h4 style="text-align:left">Attendance Summary</h4>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -163,6 +163,8 @@
                     <th style="text-align:center">Non Payable Days</th>
                     <th style="text-align:center">Total Days</th>
                     <th style="text-align:center">Salary for</th>
+                    <th style="text-align:center">Salary Per Day</th>
+                    <th style="text-align:center">Salary to Get</th>
                 </tr>
             </thead>
             <tbody>
@@ -174,6 +176,8 @@
                     <td style="text-align:center">@ViewBag.NonPayableDays.ToString("0.0")</td>
                     <td style="text-align:center">@ViewBag.TotalDays</td>
                     <td style="text-align:center">@ViewBag.SalaryFor</td>
+                    <td style="text-align:center">₹@ViewBag.SalaryPerDay</td>
+                    <td style="text-align:center">₹@ViewBag.SalaryToGet</td>
                 </tr>
             </tbody>
         </table>
